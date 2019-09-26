@@ -60,15 +60,54 @@ $ git branch nouvelle-branche
 // changer de branch
 $ git checkout nouvelle-branche
 
+// cree et se placer sur une nouvelle branche
+$ git checkout -b nouvelle-branche
+
 // fusioner branche: ajouter dans master les commit sur nouvelle-branche
 $ git merge nouvelle-branche
 
+// conflict fusion branche, lors du merge, ouvrir le fichier et le modifier a la main
+$ git add nom_du_fichier
+$ git commit 	// pas de msg, generer tout seul, faus juste sauvgarder
+
+// suprimer branche
+$ git branch -d ma-branche
 
 
+// savoir qui a ecrit quoi dans le fichier
+$ git blame nom_du_fichier
+
+// savoir ce qui a ete modifier
+$ git show effc7ae9 // c est le debut du sha que l on a avec git blame
 
 
+// ingniorer ; rendre invisible au autre des fichier ex: fichier config
+$ .gitignore // cree fichier 
+// y ajouter le nom des fichier a ignorer, si pas meme repertoir alors donner chemin
 
 
+// metre du code en stand-bye quelque instant
+// ne pas faire le commit ; car sa fait un commit intermediaire moche
+$ git stash
+// modifie le fichier, envoy sur github
+$ git stash pop 	// recupere notre code 
+// fait le commit -am
+
+// le stash pop suprime ne garde pas en memoir ce qu il y avait dadans apres le pop,
+// ..si on veux garder soit refait un stash, soit apply
+$ git stash apply
 
 
+// pull request PR ; modif code open source
+// une fois sur le projet, cliquez sur "fork" (=> duplique le repository sur notre compte)
+// ..lire le readme et regarder condition pour contribuer au code
+// methode general :
+$ git clone https:/...
+$ git checkout -b my-new-feature  	// cree nouvelle branche avec comme nom notre modification (ex: readme-update)
+$ git commit -am "msg"
+$ git push origin my-new-feature
+// sur github, cliquez sur "Compare & pull request", rediger msg a destination du mec qui gere le repository
 
+
+// rester identifier 1h pour push 
+$ git config --global credential.helper 'cache --timeout=3600'
