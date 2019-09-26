@@ -44,3 +44,31 @@ $ git pull origin master
 
 // Dire ou est l origine pour envoier les fichier sur github
 $ git remote add origin https://github.com/thomas-che/cours.git
+
+
+// faire add sur tout le dossier
+$ git add *
+
+
+// voir sur quelle branche on est
+$ git branch
+// on la repere avec * 
+
+// cree une nouvelle branche
+$ git branch nouvelle-branche
+
+// changer de branch
+$ git checkout nouvelle-branche
+
+// fusioner branche: ajouter dans master les commit sur nouvelle-branche
+$ git merge nouvelle-branche
+
+
+
+
+
+
+
+
+
+
