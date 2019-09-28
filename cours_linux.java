@@ -3,6 +3,8 @@
 //afficher tout les docier du repertoire
 $ ll / ls / ls-l
 
+$ ls -a // afiche les fichier caher
+
 // selectioner un dossier		
 $ cd
 
@@ -35,6 +37,8 @@ $ rmdir
 
 // suprimer fichier
 $ rm	
+$ rm -r  // pour suprimer le repertoir
+$ rm -rf // pour forcer la supretion
 
 // retour arriere dans dossier	
 $ cd ..	
@@ -55,7 +59,11 @@ $ cat yyy
 $ chmod -x yyy
 
 // tout autoriser et pour tout le monde pour le fichier yyy	
-$ chmod 777 yyy	
+$ chmod 777 yyy	 // 4=r ; w=2 ; x=1
+
+$ chmod g-x yyy  // retir x pour le g=groupe 
+$ chmod x-x yyy  // retir x pour le u=user
+$ chmod o-x yyy  // retir x pour le o=oser
 
 // voir history des commande
 $ history	
@@ -71,6 +79,9 @@ $ cp		// ex: cp bonjour.text /rep1/	bonjour copier dans repertoir 1
 
 // bouger le fichier vers le rep que on veut
 $ mv	
+$ mv fichier1 fichier3  // si on veux rename fichier1 en fichier2 
+// renommer un fichier fichier1 en fichier2
+$ mv fichier1 fichier2	
 
 // editeur texte dans terminal
 $ nano	
@@ -78,10 +89,19 @@ $ nano
 // adresse ip local
 $ ip addr show	
 
-// renommer un fichier fichier1 en fichier2
-$ mv fichier1 fichier2	
-
 // cree fichier
 $ touch fichier.txt
+
+// affiche page par page
+$ more nom_fichier.txt
+
+// avance ligne par ligne
+$ less nom_ficher.txt
+$ /parter 	// on regarde un motif :"pater"
+
+// affiche le manuel de less ; on peux remplacer less par d autre appli ex: nano
+$ man less
+
+
 
 
