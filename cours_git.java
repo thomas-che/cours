@@ -1,7 +1,28 @@
+// Premiere utilisation sur nouveau pc
+// cours: https://github.com/thomas-che/cours.git
+// tp_l2_info: https://github.com/thomas-che/tp_l2_info.git
+$ git clone https:/.....
+$ cd nom_du_repository
+$ git config --global user.name "thomas-univ-num_salle"
+$ git config --global user.email "nom_matiere-tp/td@date.heure"
+$ git commit -am"msg"
+$ git push origin master
+
+
+// Utilisation au quotidien
+// cours: https://github.com/thomas-che/cours.git
+// tp_l2_info: https://github.com/thomas-che/tp_l2_info.git
+$ cd nom_du_repository
+$ git pull origin master
+$ git config --global user.name "thomas-univ-num_salle"
+$ git config --global user.email "nom_matiere-tp/td@date.heure"
+$ git commit -am"msg"
+$ git push origin master
+
+
 // config du git, @email pour github (gratuit)
 $ git config --global user.name "Votre nom ou pseudo"
 $ git config --global user.email "Votre@email.com"
-
 
 
 // Se placer dans le repertoir ou l on veux enregistrer les versions de notre code ; 
