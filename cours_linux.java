@@ -102,6 +102,24 @@ $ /parter 	// on regarde un motif :"pater"
 // affiche le manuel de less ; on peux remplacer less par d autre appli ex: nano
 $ man less
 
+// trier par odre croissant
+$ ls -g 	// trie par nom croissant 
+
+// rediriger sortie ecran dans un fichier
+$ ls -l /etc >etc.ls-l  // redirige ls -l du dosier etc dans un fichier nomer etc.ls-l
+
+// changer langue LANG ; zone geographique TZ (=time zone); demander la date
+$ LANG=en_US.utf8 TZ='America/New_york' date
+
+// compte le nb de fichier 
+$ wc
+
+// afficher une variable 
+$ echo $VARIABLE
+
+// ecrir a la fin du fichier
+$ echo toto >> fichier.txt
+
 
 
 
