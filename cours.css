@@ -1,0 +1,273 @@
+/*commentaire en css */
+
+/* acceder a une balise */
+.nom_balise   /* class */
+#nom_balise   /* id */
+
+
+/* selectionner plusieur balises */
+h1 , p {
+	color: blue;
+}
+
+
+/* les balises apres h1 seront de couleur blue */
+h1 + p {
+	color: blue;
+}
+
+
+/* les balises em dans h1 seront de couleur blue */
+h1 em {
+	color: blue;
+}
+
+
+/* toutes les balise seront en blue */
+* {
+	color: blue;
+}
+
+
+/* toute les balises a qui on un attribut title */
+a[title]{
+	color: blue;
+}
+
+
+/* toute les balises a qui on un attribut title dans lequel il y a le mot ici*/
+a[title="ici"]{
+	color: blue;
+}
+
+
+/* tout ce qui est relatif au texte */
+.font {
+	font-size: 1.3em; /* taille respensive*/
+	/* ou ca:  	xx-small: minuscule ;
+				x-small: très petit ;
+				small: petit ;
+				medium: moyen ;
+				large: grand ;
+				x-large: très grand ;
+				xx-large: euh… gigantesque  */
+ 	/* https://www.fontsquirrel.com/  site avec plein police */
+ 	font-family: "robotoregular", "impact", "Arial" , sans-serif; /* roboto.. prioritaire sur impact ... ; si aucune des police alors sans-serif*/
+
+ 	font-style: italic;
+ 	font-weight: bold;  /* metre en gras*/
+ 	
+
+
+}
+
+
+/* nouvelle police pr etre utiliser dans tout les navigateurs */
+@font-face {
+    font-family: 'robotoregular';
+    src: url('font/Roboto-Regular-webfont.eot');
+    src: url('font/Roboto-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('font/Roboto-Regular-webfont.woff2') format('woff2'),
+         url('font/Roboto-Regular-webfont.woff') format('woff'),
+         url('font/Roboto-Regular-webfont.ttf') format('truetype'),
+         url('font/Roboto-Regular-webfont.svg#robotoregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+.text {
+	text-decoration: underline;
+			/*		line-through: barré.
+					overline: ligne au-dessus.
+					blink: clignotant. Ne fonctionne pas sur tous les navigateurs (Internet Explorer et Google Chrome, notamment).
+					none: normal (par défaut) */
+	text-align: left;
+			/* 	right
+				center
+				justify : utilie pour les paragraphe pr prendre toute la place de l ecrant : aligne a gauche et a droite */
+}
+
+
+/* image a flottante a gauche du texte; dans balise img utiliser une class */
+.float {
+	float: left;
+
+}
+/* pour ecrit le paragraphe sous l image, arrete le float */
+.autre_paragraphe{
+	clear: left;
+	/*		both; */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -2,6 +2,7 @@
 <html lang="fr" xml:lang="fr" xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta charset="utf-8" />  <!-- encodage utiliser pr le fificher html--> <!-- balise orpheline-->
+        <link rel="stylesheet" href="cours.css" /> <!-- pas obliger; pr le css -->
         <title>Titre</title>  <!-- balise paire-->
     </head>
 
@@ -74,6 +75,7 @@ C'est un petit pas pour l'homme, mais un bond de géant pour l'humanité.
 <!-- lien relatif vers un autre fichier html qui ce trouve dans un autre dossier (-1) parent-->
 <a href="../page3.html">la</a>
 <!-- lien vers une ancre avec id=.. et a href="#  tres important le #-->
+
 <h2 id="mon_ancre">ici</h2>
 <a href="#mon_ancre">aller a mon ancre</a>
 <!-- lien vers une ancre sur le fichier "page2.html" au niveaux de l id= "ancre_page2-->
@@ -102,6 +104,7 @@ C'est un petit pas pour l'homme, mais un bond de géant pour l'humanité.
 <!-- pour ouvrir le lien associer a l image dans une new fentre metre le target dans la balise  <a href ... -->
 <a href="http://www.meteofrance.com/accueil" target="_blank" ><img src="meteo.png" alt="Photo meteo france" title="cliquez dessus pour acceder a meteo fr"  /></a>
 
+
 <!-- zonne cliquable sur une image -->
 <img src="meteo.png" alt="Photo meteo france" usemap="#carte"/>
 	<map name="carte">
@@ -110,15 +113,21 @@ C'est un petit pas pour l'homme, mais un bond de géant pour l'humanité.
 	</map>
 
 
+<!-- ecrit une legende sous la photo, la figure est une photo imortante -->
+<figure>
+    <img src="images/blocnotes.png" alt="Bloc-Notes" />
+    <figcaption>Le logiciel Bloc-Notes</figcaption>
+</figure>
 
 
+<!-- balise generique utile pour le css -->
+<div class="premier paragraphe"></div>
+<span class="mot_important_dans_phrase"></span>
 
 
-
-
-
-
-
+<!-- acceder a une balise avec le css -->
+<p class="premier_paragraphe" >le premier paragraphe</p>
+<p id="premier_paragraphe" >le premier paragraphe</p>
 
 
 
