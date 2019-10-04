@@ -25,7 +25,8 @@ double pi=pi=3.14159263d; //comme long
 
 
 // var stocke caractere
-char caractere = "A"
+// /!\ un char utilise les simple quote /!\
+char caractere = 'A'
 
 
 // var booleen
@@ -70,6 +71,7 @@ int i = sc.nextInt();  // pour int
 
 String str = sc.nextLine();  // vas avec ligne desous
 char carac = str.charAt(0);  // recupere le char d indice 0 de str
+reponce = sc.nextLine().charAt(0)  // example recupere 'o' de oui
 
 // si pb : tete de lecture pas repositioner quand nextInt() donc faire nextLine() dans le vide
 int i = sc.nextInt();
@@ -79,33 +81,67 @@ sc.nextLine();
 String str = sc.nextLine();
 
 
+&& // ET logique
+|| // OU logique
+!= // different 
 
 
+// pas besoin des acolades apres le if ou else si que une seul ligne d instruction
+if (0 < 1)
+	System.out.println("le nombre est négatif");
+else if (0==1)
+    System.out.println("le nombre est positif");
+else 
+	System.out.println("le nombre est positif")
 
 
+// switch
+switch (/*Variable*/) {
+  case /*Argument*/:
+    /*Action*/;
+    break;        
+  default:
+    /*Action*/;             
+}
 
 
+//operateur ternaire
+type_retour nom_variable = (/*condition*/) ? /*si true */ : /*si false */ ;
 
 
+// example force user a taper soit 'o' ou 'n' 
+while (reponce2 != 'o' && reponce2!='n'){
+    System.out.println("recomenece !");
+    reponce2 = sc1.nextLine().charAt(0);
+}
 
 
+// do while ; contrairement a while fait au moins une execution
+// utile pour teste si saisie clavier est bien un int 
+do{
+  /*Instructions*/
+}while(a < b); // pas oublier ;
 
 
+// boucle for
+for(int i = 1; /* condition */ ; i++) { }
 
 
+//tableau 1D
+<type du tableau> <nom du tableau> [] = { <contenu du tableau>};
+int tableauEntier[] = {0,1,2,3,4,5,6,7,8,9};
 
+// declarer tableu vide d un certain type
+int tableauEntier[] = new int[6];
 
+// tableau 2D
+int tab [][] = {{1,2},{4,5}};
 
+// longeur d un tableau
+tab.lenght
 
-
-
-
-
-
-
-
-
-
+// parcour le tableau
+for(String str : tab)	// for (type_du_tab variable : nom_du_tab)
 
 
 
