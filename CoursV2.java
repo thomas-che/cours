@@ -144,18 +144,71 @@ tab.lenght
 for(String str : tab)	// for (type_du_tab variable : nom_du_tab)
 
 
+// methode sur chaine : majuscule , minucule, longeur
+chaine.toLowerCase()
+chaine.toUpperCase()
+chaine.length()
+chaine.charAt(4) // retourn char a l indice 4 de la chaine
+chaine.substring(3,13)  // extrait un string de la position 3 a 13
+n = chaine.indexOf('t')  // retourn un int qui est l indice du char 't' ou d un string dans la chaine en partant du debut
+n = mot.lastIndexOf('t');  // pareil mais partant de la fin
 
 
+// test l egaliter entre 2 chaines
+if (str1.equals(str2))
+// l inegaliter
+if (!str1.equals(str2))
 
 
+// methode math
+//Retourne un nombre aléatoire compris entre 0 et 1, comme 0.0001385746329371058
+double X = 0.0;
+X = Math.random();
+
+double sin = Math.sin(120);     //La fonction sinus
+double cos = Math.cos(120);     //La fonction cosinus
+double tan = Math.tan(120);     //La fonction tangente
+double abs = Math.abs(-120.25); //La fonction valeur absolue (retourne le nombre sans le signe)
+
+double d = 2;
+double exp = Math.pow(d, 2);    //La fonction exposant ; ==> d**2
 
 
+/* 3 type de methodes :
+1) renvoit rien : void
+2) renvoit type primitif ex: int,double...
+3) renvoit Objet ex: String */
 
 
+// cree sa propre methode
+public static double arrondi(double A, int B) {
+  return (double) ( (int) (A * Math.pow(10, B) + .5)) / Math.pow(10, B);
+}
+
+// methode definit en dehors du main 
+static void parcourirTableau(String[] tab) {
+    for(String str : tab)
+	System.out.println(str);
+}
+// surcharge de methode ; meme nom mais parametre different : type ; nb d arguments           
+static void parcourirTableau(int[] tab)
+static void parcourirTableau(String[][] tab,int i)
 
 
+// cree intance de la classe String()
+String str = new String("intance de la classe String");
 
 
+// cree class
+public class Ville {
+	String nomVille;
+}
+// cree constructeur default ; meme nom pr le constructeur que la classe 
+public Ville () {
+	nomVille="Inconu";
+}
+// cree un Objet (dans le main)
+Ville maVille = new Ville ();  // nom de la class ; nom de mon objet ; constructeur new ; le nom de mon contructeur
 
 
 
