@@ -175,17 +175,19 @@ double exp = Math.pow(d, 2);    //La fonction exposant ; ==> d**2
 
 
 /* 3 type de methodes :
-1) renvoit rien : void
-2) renvoit type primitif ex: int,double...
-3) renvoit Objet ex: String */
+1) constructeur ; renvoit rien : void
+2) accesseurs ; renvoit type primitif ex: int,double...
+3) instance ; renvoit Objet ex: String */
 
 
-// cree sa propre methode
+// cree sa propre methode instance
 public static double arrondi(double A, int B) {
   return (double) ( (int) (A * Math.pow(10, B) + .5)) / Math.pow(10, B);
 }
 
-// methode definit en dehors du main 
+// methode definit en dehors de la class
+public void nomDeLaMethode ()
+// ou methode static 
 static void parcourirTableau(String[] tab) {
     for(String str : tab)
 	System.out.println(str);
@@ -201,7 +203,7 @@ String str = new String("intance de la classe String");
 
 // cree class
 public class Ville {
-	String nomVille;
+	private String nomVille;
 }
 // cree constructeur default ; meme nom pr le constructeur que la classe 
 public Ville () {
@@ -211,10 +213,16 @@ public Ville () {
 Ville maVille = new Ville ();  // nom de la class ; nom de mon objet ; constructeur new ; le nom de mon contructeur
 
 
+// accesseur getter 
+public String getNomVille (){
+	return nomVille;
+}
+// mutateur setter 
+public void setNomVille (String nomVille){
+	this.nomVille=nomVille;
+}se
 
 
-
-
-
+// this fait refrence a l objet courrant de  
 
 
