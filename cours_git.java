@@ -132,3 +132,7 @@ $ git push origin my-new-feature
 
 // rester identifier 1h pour push 
 $ git config --global credential.helper 'cache --timeout=3600'
+
+
+// forcer un push
+$ git push --force origin master  // suprime les commits des autres machines
