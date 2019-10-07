@@ -120,6 +120,21 @@ $ echo $VARIABLE
 // ecrir a la fin du fichier
 $ echo toto >> fichier.txt
 
+// transforme une chaine de caractere
+$ tr 'a' '1' // mais attend une entrer au clavier
 
+// remplacer plusieur ocurence avec tr
+$ tr -s ' '  // ex: remplace '   ' par ' '
+s
+// transforme chaine avec un decalage de 13 charactere : ROT13
+$ tr 'a-mn-z' 'n-za-m' 
+// peut etre ecrit comme
+$ tr 'a-z' 'n-za-m'
+// gere les maj
+$ tr 'a-zA-Z' 'n-za-mN-ZA-M'
+// afficher le fichier txt puis le trad
+$ cat fichier.txt | tr 'a-zA-Z' 'n-za-mN-ZA-M' 
 
-
+// selectioner des ligne sur un fichier txt
+$ fichier.txt | head -n 30  // garde les 30 premiere ligne de fichier.txt
+$ fichier.txt | tail -n 30  // garde les 30 derniere ligne de fichier.txt
