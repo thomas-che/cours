@@ -203,7 +203,7 @@ String str = new String("intance de la classe String");
 
 // cree class
 public class Ville {
-	private String nomVille;
+	private String nomVille;  // variable d instance 
 }
 // cree constructeur default ; meme nom pr le constructeur que la classe 
 public Ville () {
@@ -223,6 +223,30 @@ public void setNomVille (String nomVille){
 }se
 
 
-// this fait refrence a l objet courrant de  
+// this fait refrence a l objet courrant ; a l interieur d un objet designe var ou methode
+this.nomVille=nomVille;
+
+
+// appeler un constructeur dans un autre constructeur
+public Ville (String nonPaii) {
+	nomPays = nomPaii ;
+	this();  // appelle le constructeur ville
+}
+
+
+// variable de class => une seul var pour  ; cree compteur commun 
+private static int num ;
+public static int compteur = 1; 
+//dans la class du constructeur :
+this.num=compteur++;
+public static int getNum () {  // getter doit etre declarer static car var static ; donc c est une methode de class
+	return num;
+}
+
+
+
+
+
+
 
 
