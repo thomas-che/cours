@@ -212,7 +212,7 @@ public Ville () {
 // cree un Objet (dans le main)
 Ville maVille = new Ville ();  // nom de la class ; nom de mon objet ; constructeur new ; le nom de mon contructeur
 
-
+	
 // accesseur getter 
 public String getNomVille (){
 	return nomVille;
@@ -242,6 +242,103 @@ this.num=compteur++;
 public static int getNum () {  // getter doit etre declarer static car var static ; donc c est une methode de class
 	return num;
 }
+
+
+// ==================================> heritage <=====================================================================
+
+// cree class
+public class Ville {
+	protected String nomVille;  // var acceseible par les sous class
+// heritage ; Capital herite de ville ; Capital ne peut heriter que de 1 seul class mere
+public class Capital extends Ville () {
+	private String monument ; // atribut de la class qui diferencie Capital de Ville
+	public Capital(String nom, int hab, String pays, String monument){
+		super(nom, hab, pays);  // appelle le constructeur de la class mere avec les parametres passer
+		this.monument="inconu";  // pour faire sa doit declarer protected devant la var 
+	}	
+}
+
+// redefinit methode dans la class fille
+@Override  // controle si la signature est la meme que dans la class mere
+public String decrisToi() {  // signature de la methode
+    return super.decrisToi()+" le monument : "+this.monument;  // supper.decristoi() appelle la methode de la class mere
+}                                                              //  a la quele on ajoute des String
+
+
+
+// ==================================> polymorphisme <================================================================
+
+
+
+
+
+
+
+
+
+
+// ==================================> java doc <=====================================================================
+
+/** 
+	* @param  
+	* @return  doivent toujour etre indiquer (sauf methode sans parametre ; methode void)
+	*/
+
+/**
+    *premiere ligne de la doc
+	*2eme ligne
+    * metre à jour le niveau du membre.
+    * @param level  Le nouveau level du membre.
+    */
+    protected void setLevel(SDZLevel level) {
+        this.level = level;
+    }
+/**
+    * Retourne le level du zéro.
+    * @return Une instance de SDZLevel, qui correspond à niveau du membre sur SDZ.
+    */
+    public SDZLevel getLevel() {
+        return level;
+    }
+/**
+    * Retourne l'adresse du profil du Zero.
+    * @return L'URL du profil du Zero, générée à partir de l'id du Zero.
+    * @throws MalformedURLException  Si jamais l'url est mal formée. 
+    */
+    public URL getURLProfil() throws MalformedURLException{
+        URL url = new URL("http://www.siteduzero.com/membres-294-"+id+".html");
+        return url;
+    }
+/**
+    * Le "level" du Zéro. Ce "level" peut être modifié.
+    * 
+    * @see SDZLevel  // permet de faire reference a une autre methode, class, ...
+    */
+    private SDZLevel level;
+
+/**
+	* QUE POUR DES CLASS PAS DES METHODES
+	* @author thomas
+	* @version 3.0
+	* @since 3.0  // c est le num de version de la class
+	* @deprecated depuis Java 1.4, remplacé par getListeAmis() // depuis java 7 doit utilise getListeAmis a la place de getVectorAmis()
+	*/
+    protected Vector<Zero> getVectorAmis(){
+        Vector<Zero> vector = new Vector<Zero>();
+        for (Zero z : listeAmis){
+            vector.add(z);
+        }
+        return vector;
+    }
+
+
+
+
+
+
+
+
+
 
 
 
