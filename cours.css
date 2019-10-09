@@ -1,45 +1,34 @@
+/*dans le html pour acceder au css
+<link rel="stylesheet" href="page_test.css" /> */
+
 /*commentaire en css */
 
 /* acceder a une balise */
-.nom_balise   /* class */
-#nom_balise   /* id */
+.nom_balise   /* class ; peux y avoir plusieur fois meme class*/
+#nom_balise   /* id ; unique */
 
 
 /* selectionner plusieur balises */
 h1 , p {
 	color: blue;
+	color: #3896E7  /* site pr color en hexa : http://www.colorpicker.com/ */
+	color: rgb(255,0,100);
 }
-
 
 /* les balises apres h1 seront de couleur blue */
-h1 + p {
-	color: blue;
-}
-
+h1 + p {color: blue;}
 
 /* les balises em dans h1 seront de couleur blue */
-h1 em {
-	color: blue;
-}
-
+h1 em {	color: blue;}
 
 /* toutes les balise seront en blue */
-* {
-	color: blue;
-}
-
+* {	color: blue;}
 
 /* toute les balises a qui on un attribut title */
-a[title]{
-	color: blue;
-}
-
+a[title]{	color: blue;}
 
 /* toute les balises a qui on un attribut title dans lequel il y a le mot ici*/
-a[title="ici"]{
-	color: blue;
-}
-
+a[title="ici"]{	color: blue;}
 
 /* tout ce qui est relatif au texte */
 .font {
@@ -79,14 +68,17 @@ a[title="ici"]{
 
 .text {
 	text-decoration: underline;
-			/*		line-through: barré.
-					overline: ligne au-dessus.
-					blink: clignotant. Ne fonctionne pas sur tous les navigateurs (Internet Explorer et Google Chrome, notamment).
-					none: normal (par défaut) */
+	text-decoration: line-through; /* barré. */
+	text-decoration: overline; /* ligne au-dessus. */
+	text-decoration: blink; /* clignotant. Ne fonctionne pas sur tous les navigateurs (Internet Explorer et Google Chrome, notamment). */
+	text-decoration: none; /* normal (par défaut) */
+	
 	text-align: left;
-			/* 	right
-				center
-				justify : utilie pour les paragraphe pr prendre toute la place de l ecrant : aligne a gauche et a droite */
+	text-align:	right;
+	text-align: center;
+		; /* utilie pour les paragraphe pr prendre toute la place de l ecrant : aligne a gauche et a droite */
+
+	text-shadow: 6px 6px 10px black;
 }
 
 
@@ -107,25 +99,105 @@ a[title="ici"]{
 }
 
 
+.background{
+	background-image: url("image.jpg");
+
+	background-attachment: fixed; /* fond fixe ne bouge pas avec le texte*/ 
+	background-attachment: scroll; /* deroule avec le texte */
+
+	background-repeat: no-repeat; /* ne se repete pas*/
+	background-repeat: repeat-x;  /* repeter que sur la premiere ligne*/
+	background-repeat: repeat-y;  /* repeter que sur la premiere colone*/
+
+	background-position: top left; /* positine image a gauche */
+
+	background: url("image.jpg") fixed no-repeat left; /* c est le super backgroud, on met tout les proprierter du fond dedans */ 
+	background: url("image1.jpg"),url("image2.jpj"); /* peux metre plusieur image separer pas => , <= */
+}
+
+/* si veux que un mot est le fond rouge : dans le html metre ce mot entre <mark>mot</mark> */
+mark{
+	background-color: red;
+}
+
+/* faire un transparence */
+.tranparence{
+	opacity: 0; /* completement invisible */
+	opacity: 1; /* totalement visible */
+	background-color: rgba(255,0,0,0.5); /* transparence de moitier (0.5) et en rouge */
+}
+
+.boder{
+	border: 2px red solid; /*2px => taille du trai ; red => color ; solid => type de la bordure*/ 
+	border-top: 2px red solid; /*que bordure en haut */
+
+	border-radius: 5px; /*arrondir les bord */
+	border-radius: 5px / 2px; /*arrondir les bord hyperbolique */
+
+	box-shadow: 6px 8px 10px black; /* 6px => decalage vers droite ; 8px => vers bas ; 10px => adoucir l ombre ; black => color de l ombre */
+	box-shadow: 6px 12px 10px black inset; /* ombre a l interieur du cadre*/
+}
+
+
+/*===================> pseudo Element <=============================================================*/
+	
+/*survol de la souris */
+p:hover {
+	color: red; 
+	border-left: 3px solid black; /* ajout bodure quand suvole le parargraphe*/
+}
+
+a:active {
+	color: red; /* change color quand clique sur le lien*/
+}
+
+a:visited {
+	color: #888888; /* change color du lien si deja visiter*/
+}
+
+/*utile pour les formulaire*/
+input:focus {
+	background-color: #77FF88; /* change la color du fond quand selectione une casse dans le form*/  
+}
 
 
 
+/*===================> block ; margin ; pading <=============================================================*/
 
+/* balise inline <a> se trouve dans une background: lise block ; balise <span> => c est le div mais en balise de type inline*/
+/* block prend toute la largeur ; <h1>,<p> est une balise de type block ; balise <div>*/
+h1{
+	width: 50%; /*largeur*/
+	height: 300px; /*hauteur*/
+}
+p{
+	/*largeur minimum du txt est 400px dans tout les cas et apres ocupe 50% de la page*/
+	width: 50%;
+	min-width: 400px;
 
+	max-width: ;
+	min-height: ;
+	max-height: ;
+}
 
+p{
+	margin:20px; /* marge exterieur, separe les elements*/
+	padding: 20px; /* marge interieur visible quand on ajoute une bordure*/
 
+	margin: 2px 0 3px 1px; /* se lit comme dans les eguiles d une montre en commencant par le haut ;; 2px => margin-top ; 0 => margin-right ; 3px => margin-bottom ; 1px => margin-left */
 
+	width:300px;
+	margin: auto; /* fontione que si width ecrit ; centre le block */ 
 
+	/* si text depase du block : */
+	overflow: visible; /* txt depase et est visible*/
+	overflow: hidden; /* text est couper et pas visible partie couper*/
+	overflow: scroll; /* text couper et visible en scollant*/
+	overflow: auto; /* en general fait un scroll*/
 
-
-
-
-
-
-
-
-
-
+	/* si mot trop long ex: Url */
+	word-wrap: break-word; /* coupe le mot et le fait tenir dans le block*/
+}
 
 
 
