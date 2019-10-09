@@ -102,7 +102,9 @@ a[title="ici"]{
 }
 
 
-
+.li {
+	list-style-type: none; /* enleve le point devant les listes */
+}
 
 
 

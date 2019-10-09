@@ -133,27 +133,85 @@ C'est un petit pas pour l'homme, mais un bond de géant pour l'humanité.
 
 
 
+<!-- ============> FORMULAIRE <====================================================================== -->
 
 
+<body>
+<!-- method="post" => cache login et password dans url  -->   
+<!-- method="get" =>  envoye tout login et password dans url ; utiliser pour aller chercher qqch sur un serveur -->   
+<!-- action="traitement.php" => ce qui ce lance quand clique sur envoyer -->     
+    <form method="post" action="traitement.php"> 
+        <fieldset>  <!-- pour faire un formulaire -->
+            <legend>Deja menbre</legend> <!-- ecrir le nom du formulaie -->
+    
+<!-- balise valide w3c : meme chaine de caractere pour for et id-->
+<!--  tj un label -->
+            <p>
+                <label for="nom">Nom :</label>
+                <input type="text" name="nom" id="nom"  placeholder="nom famille" required />
+            </p>
+
+<!-- type="password" => remplace cararctere a la saisie par des * -->
+<!-- placeholder="saisir votre login" => saisir... ecrit dans la case -->
+<!-- required => dit que ce champ doit etre rempli obligatoirement -->
+<input type="password" name="mot_de_passe" id="from_mot_de_passe"  placeholder="saisir votre login" required/>
 
 
+<p>
+    <label for="sexe"></label>
+<!-- type="radio" => bouton radio -->
+<!-- checked value="masculin" => bouton selectioner par default -->
+    Masculin :<input type="radio" name="sexe" checked value="masculin" />
+    Feminin : <input type="radio" name="sexe" value="feminin" />
+</p>
+
+<!-- casse nb qui ajoute 10 quand clique sur la fleche a la valeur par defaul (ici 45000) -->
+<input type="number" min="00000" max="99999" step="10" value="45000"/>
+<!-- slider de nb -->
+<input type="range" min="00000" max="99999" step="10" value="45000"/>
+
+<!-- data liste ; propose des mots deja renter -->
+<p>
+    <label for="profesion">profesion</label>
+    <input list="profesion" />
+    <datalist id="profesion"  >
+        <option value="cadre">
+        <option value="manuel">
+        <option value="sans_job">
+        <option value="retraite">
+        <option value="etudiant">
+    </datalist>
+</p>
 
 
+<!-- liste deroulante ; selected => selectioner par default-->
+<P>
+    <select name="comment_connu">
+        <option value="net" selected >Par le net</option>
+        <option value="ami"  >Par un ami</option>
+    </select>
+</P>
 
+<!-- Zone de texte -->
+<p>
+    <label for="info_complementaire">Info complementaire</label>
+<!-- rows="2" => nb de lignes ; col="50" => nb de colones -->
+    <textarea name="" id="from_info_complementaire" rows="2" col="50" > </textarea>
+</p>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!-- les boutons en dehors de fieldset --> 
+</fieldset>
+<p>
+<!-- type="submit" => bouton qui va executer action dans la balise form au tout debut -->
+<!-- value="envoyer" => ce qui est ecrit dans le bouton sur firedfox -->
+    <input type="submit" name="submit" value="envoyer" />
+<!-- formaction="test.html" => execute cette action et non action par default -->
+<!-- formtarget="_blank" => ouvre dans une new fenetre -->
+<!-- formmethod="get" => utilise la methode get et pas la methode par defalt -->
+    <input type="submit" name="test" value="tester" formaction="test.html" formtarget="_blank" formmethod="get" />
+<!-- type="reset" => pour reset les donners ecrit -->
+    <input type="reset" name="effacer" value="effacer" />
+</p>
 
 
 
