@@ -76,9 +76,11 @@ a[title="ici"]{	color: blue;}
 	text-align: left;
 	text-align:	right;
 	text-align: center;
-		; /* utilie pour les paragraphe pr prendre toute la place de l ecrant : aligne a gauche et a droite */
+	text-align: justify; /* utilie pour les paragraphe pr prendre toute la place de l ecrant : aligne a gauche et a droite */
 
 	text-shadow: 6px 6px 10px black;
+
+	text-transform: uppercase; /* metre trout en maj*/
 }
 
 
@@ -162,7 +164,7 @@ input:focus {
 
 
 
-/*===================> block ; margin ; pading <=============================================================*/
+/*===================> block ; margin ; pading <====================================================*/
 
 /* balise inline <a> se trouve dans une background: lise block ; balise <span> => c est le div mais en balise de type inline*/
 /* block prend toute la largeur ; <h1>,<p> est une balise de type block ; balise <div>*/
@@ -200,17 +202,80 @@ p{
 }
 
 
+/*===================> Flexbox <====================================================================*/
+
+/* metre un dans un grand <div id="conteneur"> toute mes autre balise div*/
+
+#conteneur {
+	display: flex; /* met les block sur la meme ligne*/
+	flex-direction: column; /* re-affiche comme a la basse en colonne*/
+	flex-direction: column-reverse; /* affiche en colonne mais a l envers*/
+	flex-direction: row-reverse; /* afiche sur une ligne coller a droite et a l envers*/
+	flex-wrap: wrap; /* fait revenir a la ligne le block si pas de place pour aficher*/
+
+	justify-content: flex-start; /* alliger par defaut au debut*/
+	justify-content: flex-end; /* alliger a la fin*/
+	justify-content: center; /* centrer sur la page */
+	justify-content: space-between; /* centrer sur la page avec des blanc entre les block*/
+	justify-content: space-around; /* centrer sur la page avec des blanc entre les block et avant/apres les blocks*/
+
+	align-items: stretch; /* valeur par default*/
+	align-items: flex-start; /* aligner en haut*/
+	align-items: flex-end; /* aligner en bas*/
+/* ou juste metre une margin: auto; sur mon element et il est center*/
+	align-items: center; /* center dans le cadre*/ 
+	align-items: baseline; /* comme flex-start*/
+
+/* quand des block sur plusieur lignes ; comme align-items*/
+	align-content: flex-start; 
+}
 
 
+/* selectioner element qui ont le meme nom de class*/
+.element:nth-child(1) {
+	background-color: orange;
+}
+.element:nth-child(2) {
+	background-color: blue;
+/* order: pas compris fonctionement !!*/
+	order: 3; /* le block 2 prend la place du 3 et inversement*/
+	flex:1; /* prendra tout l espace restant*/
+}
+.element:nth-child(3) {
+	background-color: green;
+	flex:2; /* sera 2 fois plus gros que le flex 1*/
+}
 
 
+/*===================> avant Flexbox ?? <===========================================================*/
+
+/* methode utiliser pour agencer la page comme on voulais avant flexbox*/
+
+nav {
+	float: left; /* va floter en haut a gauche de la valise ui suit*/  
+/* pour pas que le txte se passe sous le float on peux metre une margin-left: a notre txt*/
+	
+	display: inline; /* element se comporte comme une balise in line*/
+	display: block; /* comme un block*/
+	display: none; /* element ne sera pas aficher sur la page*/
+	display: inline-block; /* se comporte comme un inline mais peux avoir des dimentions comme un block*/
+
+/* aligner 2 block en haut ; s utilise avec inline-block*/
+	vertical-align: top; /* aligner les block en haut*/
+
+	position: fixed; /* element tj visible sur la page*/
+	position: relative; /* depace element par rapport a valeur de basse*/
+	position: absolute; /* placer element ou on veux meme par dessus un autre block*/
+	/* a utiliser avec des position: absolute et relative */
+	top: 0px;
+	bottom: ;
+	right: 0px;
+	left: ;
+	/* si 2 element se chevauche peu definir prioriter a afficher*/
+	z-index: 5; /* celui qui a le plus gros nb sera afficher*/
 
 
-
-
-
-
-
+}
 
 
 
