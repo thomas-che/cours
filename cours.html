@@ -131,18 +131,31 @@ C'est un petit pas pour l'homme, mais un bond de géant pour l'humanité.
 
 
 
+<!-- ============> TABLEAU <======================================================================= -->
+
+<!-- pas obliger de metre les thead,tbody... -->
+<table>
+<!-- caption => pr le titre du tableau -->
+    <caption>Passagers du vol 377</caption>
+
+    <thead> <!-- En-tête du tableau -->
+<!-- tr => une ligne ; th => titre de collone -->
+        <tr> <th>Nom</th> <th>Âge</th> <th>Pays</th> </tr>
+    </thead>
+
+    <tfoot> <!-- Pied de tableau -->
+       <!--  comme pr la balise thead -->
+    </tfoot>
+
+    <tbody> <!-- Corps du tableau -->
+<!-- td => info dans casse ; colspan="2" => fusione 2 col ; rowspan pr les lignes-->
+       <tr> <td colspan="2">Carmen</td> <td>33 ans</td> <td>Espagne</td> </tr>
+       <tr> <td rowspan="2">Michelle</td> <td>26 ans</td> <td>États-Unis</td> </tr>
+    </tbody>
+</table>
 
 
-
-
-
-
-
-
-
-
-
-<!-- ============> FORMULAIRE <====================================================================== -->
+<!-- ============> FORMULAIRE <==================================================================== -->
 
 
 <body>
@@ -154,11 +167,15 @@ C'est un petit pas pour l'homme, mais un bond de géant pour l'humanité.
             <legend>Deja menbre</legend> <!-- ecrir le nom du formulaie -->
     
 <!-- balise valide w3c : meme chaine de caractere pour for et id-->
-<!--  tj un label -->
             <p>
+<!-- affiche devant la casse du txte et il est lier a la case avec le for="nom" et id="nom-->
                 <label for="nom">Nom :</label>
+<!-- placeholder => affiche en fond msg ; required => champs obligatoirement remplis -->
                 <input type="text" name="nom" id="nom"  placeholder="nom famille" required />
             </p>
+
+<!-- value => valeur deja rempli ; maxlength => max char ; autofocus => curseur direct dans le champ au chargement de la page-->
+<input type="text" name="nom" id="nom"  value="DUPONT" maxlength="20" autofocus />
 
 <!-- type="password" => remplace cararctere a la saisie par des * -->
 <!-- placeholder="saisir votre login" => saisir... ecrit dans la case -->
@@ -168,7 +185,7 @@ C'est un petit pas pour l'homme, mais un bond de géant pour l'humanité.
 
 <p>
     <label for="sexe"></label>
-<!-- type="radio" => bouton radio -->
+<!-- type="radio" => bouton radio ; doit avoir le meme name pr selectioner que 1 bouton-->
 <!-- checked value="masculin" => bouton selectioner par default -->
     Masculin :<input type="radio" name="sexe" checked value="masculin" />
     Feminin : <input type="radio" name="sexe" value="feminin" />
@@ -196,8 +213,14 @@ C'est un petit pas pour l'homme, mais un bond de géant pour l'humanité.
 <!-- liste deroulante ; selected => selectioner par default-->
 <P>
     <select name="comment_connu">
-        <option value="net" selected >Par le net</option>
-        <option value="ami"  >Par un ami</option>
+<!-- optgroup => cree un sous groupe dans la liste -->
+        <optgroup label="Internete"> 
+            <option value="forum" selected >sur un forum</option>
+            <option value="pub" >avec une pub </option>
+        </optgroup>
+        <optgroup label="Autrement">
+            <option value="ami"  >Par un ami</option>
+        </optgroup>
     </select>
 </P>
 
@@ -205,7 +228,7 @@ C'est un petit pas pour l'homme, mais un bond de géant pour l'humanité.
 <p>
     <label for="info_complementaire">Info complementaire</label>
 <!-- rows="2" => nb de lignes ; col="50" => nb de colones -->
-    <textarea name="" id="from_info_complementaire" rows="2" col="50" > </textarea>
+    <textarea name="info_complementaire" id="info_complementaire" rows="2" col="50" > le texte ici </textarea>
 </p>
 
 <!-- les boutons en dehors de fieldset --> 
@@ -222,6 +245,22 @@ C'est un petit pas pour l'homme, mais un bond de géant pour l'humanité.
     <input type="reset" name="effacer" value="effacer" />
 </p>
 
+<!-- autre balise : -->
+<input type="e-mail" >
+<input type="url" >
+<input type="tel" > <!-- doute sur celui la -->
+<input type="number" min="2" max="20" step="3"> <!-- step =>avance de 3 en 3 -->
+<input type="range" > <!-- curseur horizontal pr choisir nb -->
+<input type="color" > <!-- selectioner une couleur -->
+<input type="date" >
+<input type="time" >
+<input type="search" > <!-- juste pr indiquer que se champs est un champs de recherche -->
+<input type="checkbox" checked > <!-- casse est cocher -->
+
+<!-- CSS -->
+:required {}
+:invalid {}
+:focus {}    <!-- quand le champ est selectioner -->
 
 <!-- ============> sITE 2.0 <====================================================================== -->
 
@@ -260,13 +299,19 @@ C'est un petit pas pour l'homme, mais un bond de géant pour l'humanité.
 </body>
 
 
+<!-- ===================================== -->
 
+<!-- controls => avoir le contol sur le song ; autoplay => joue direct chargement ; loop => boucle -->
+<audio src="musique.mp3" controls autoplay loop > </audio>
 
+<!-- navigateur selectione automatiquement quelle fichier prendre -->
+<audio>
+    <source src="musique.mp3" type="">
+    <source src="musique.wav" type="">
+</audio>
 
-
-
-
-
+<!-- poster => c est la mignature -->
+<video src="video.mp4" controls autoplay width="" height="" poster="migiature_video.jpg"> </video>
 
 
 

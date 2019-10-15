@@ -45,9 +45,6 @@ a[title="ici"]{	color: blue;}
 
  	font-style: italic;
  	font-weight: bold;  /* metre en gras*/
- 	
-
-
 }
 
 
@@ -139,6 +136,9 @@ mark{
 	box-shadow: 6px 8px 10px black; /* 6px => decalage vers droite ; 8px => vers bas ; 10px => adoucir l ombre ; black => color de l ombre */
 	box-shadow: 6px 12px 10px black inset; /* ombre a l interieur du cadre*/
 }
+
+/* pour  les tableaux*/
+table,tr,td { empty-cells:hide ; border: 1px solid black; border-collapse:separate;}
 
 
 /*===================> pseudo Element <=============================================================*/
@@ -278,8 +278,15 @@ nav {
 }
 
 
-
-
+/*========================*/
+/* dans le html ; pour untiliser un autre doc avec les regle css*/
+<link rel="stylesheet" media="screen and (max-width: 1280px)" href="petite_resolution.css" />
+/* OU dans le meme fichier css */
+@media screen and (max-width: 1280px) {
+   /* Rédigez vos propriétés CSS ici */}
+@media handheld {
+	/* les tel */
+}
 
 
 

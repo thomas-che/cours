@@ -138,3 +138,20 @@ $ cat fichier.txt | tr 'a-zA-Z' 'n-za-mN-ZA-M'
 // selectioner des ligne sur un fichier txt
 $ fichier.txt | head -n 30  // garde les 30 premiere ligne de fichier.txt
 $ fichier.txt | tail -n 30  // garde les 30 derniere ligne de fichier.txt
+
+// cut -f3,5 => prend les champ 3 et 5 , -d',' => separateur est ,
+$ cat villes.csv | cut -f3,5 -d',' > villeTri.txt
+
+// trie avec sort; -k2 => prend le 2eme champs avec comme separateur -t',' = , ; -n => trie par ordre croisant ; -r => reverse donc tri ordre decoisant
+$ sort -k2 -t',' -n -r villeTri.txt
+
+// executer commande sans quiter notre repertoir actuel
+$ find /etc -type d -maxdepth 1  // -type d => de type dossier ; -maxdepth 1 => desendre au niveau 1
+
+// reproduire l arborecence d un dossier avec les fichier dedans
+// dans le rep ou on veux reprodirer l arborecence
+$ find /home/thomas/Documents/tp_l2_info/outil_dev/atelier/ | cut -f8- -d'/' | xargs mkdir
+
+// faire une jointure, les 2 liste doivent etre trier ; bc => permet d eecuter en bash la ligne
+$ join rp pp | cut -d' ' -f2,4 | tr ' ' '*' | bc
+

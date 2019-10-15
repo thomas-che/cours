@@ -268,6 +268,69 @@ public String decrisToi() {  // signature de la methode
 
 // ==================================> polymorphisme <================================================================
 
+// on fait un traitement sur un objet sans connaitre son type
+// covariance des variables : objet de type Ville peut contenir un objet de type Capitale
+
+// methode toString() : affiche l etat de l objet ; dans chaque fille ajoute code pour toString
+public String toString(){
+  return super.toString() + "\n \t ==>>" + this.monument + " en est un monument";
+}
+// appelle toString : previlegier 2eme methodes
+System.out.println(ville); 
+System.out.println(ville.toString() );
+
+
+// transtypage : ((Ville)v) on transtype la reference v (de type Objet) et Ville
+System.out.println(((Ville)v).decrisToi()+"\n");
+
+// methode de hashcode () : code Entier associer a un object ; redefeni aussi equals ()
+// depuis java 7 propose methode de calcul simple
+public int hashCode() {
+  return Objects.hash(categorie, nbreHabitants, nomPays, nomVille);
+}
+
+// methode equal () : savoir si 2 objet sont egaux= meme atribut et meme contenut
+public boolean equals(Object obj) {
+    // ...
+}
+
+
+// methode clone () : clone calss et sous class
+// pas vus sur opr
+protected Object clone() throws CloneNotSupportedException {
+    return super.clone();
+}
+
+// methode signe final ne peux pas être surchargée
+public final int maMethode(){
+}
+
+
+//===================================
+
+// package : com.exo1 => en miniscule et tj par un com,fr,... com.package_ => metre le _ pour utiliser des mots deja utiliser par java
+// public => la porter de la class est definit endehors du package
+public class A {
+}
+// porter par default = juste le package
+
+// dans un autre package doit faire un impot
+import com.exo2;
+
+
+
+// ==================================> Interfaces <===================================================================
+
+
+// abstract => rend une methode inutile dans la class mere mais utile dans class fille
+// si methode abstract alors la class est aussi abstract !!
+public abstract class Ville {
+    public abstract void traitement () { }
+}
+
+
+
+
 
 
 
@@ -330,8 +393,7 @@ public String decrisToi() {  // signature de la methode
         }
         return vector;
     }
-
-
+}
 
 
 
