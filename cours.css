@@ -97,6 +97,11 @@ a[title="ici"]{	color: blue;}
 	list-style-type: none; /* enleve le point devant les listes */
 }
 
+/*pour retirer barre sous lien visiter*/
+a {
+	text-decoration: none;
+}
+
 
 .background{
 	background-image: url("image.jpg");
@@ -162,6 +167,15 @@ input:focus {
 	background-color: #77FF88; /* change la color du fond quand selectione une casse dans le form*/  
 }
 
+/*les balise label qui ne sont pas de la class="pas_de_style" alors auront le style suivant*/
+label:not(.pas_de_style) { 
+	border-radius: 3px;
+}
+
+/* element avec atribut : target*/
+input[type="submit"] {
+	width: 20%;
+}
 
 
 /*===================> block ; margin ; pading <====================================================*/
