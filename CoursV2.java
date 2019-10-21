@@ -319,17 +319,84 @@ import com.exo2;
 
 
 
-// ==================================> Interfaces <===================================================================
-
+// ==================================> abstract <=====================================================================
 
 // abstract => rend une methode inutile dans la class mere mais utile dans class fille
 // si methode abstract alors la class est aussi abstract !!
-public abstract class Ville {
-    public abstract void traitement () { }
+public abstract class Animal {
+    abstract void manger ();  // methode abstrac pas de corp
+    protected void boire(){  // peux avoir des methode non abstract
+        System.out.println("Je bois de l'eau !");
+    }
 }
 
+// instancier un objet
+Animal loup = new Loup();
+
+// retourne le nom du package + nom de la class ex: com.thomas.Loup
+this.getClass();
 
 
+
+// ==================================> Interfaces <===================================================================
+
+// cree une interface avec des methode abstrac, pas bessoin du mot abstarct devant les methode car une interface est par default abstract
+public interface I{ 
+  public void methode(); 
+}
+
+//  pour que la class X utilise une interface : implements I
+public class Chien extends Y implements I{
+    // ... constructeur ...
+  public void methode(){
+    // methode des interface doivent etre redefinit !
+}
+
+// utiliser methode de l interface
+Chien c = new Chien();
+c.methode();
+
+// utiliser polymorphisme de l interface
+I i = new Chien();
+i.methode();
+
+
+// ========> java 8
+
+//interface plus abstrac a 100% , contien : methode static , une def par default d une methode
+
+public interface Reproduction {
+// methode static
+    public static void description() {
+        System.out.println("Méthode statique dans une interface");
+    }
+}
+// rajoute 1 niveau d implementation suplemenatire : interface Pondre est la fille de l interface Reproduction
+public interface Pondre extends Reproduction {
+// redef methode description
+    public static void description() {
+// appelle l ancienne methode 
+        Reproduction.description();
+        System.out.println("Redéfinie dans Pondre.java");
+    }   
+}
+
+public interface Pondre extends Reproduction {
+    public static void description() {
+        Reproduction.description();
+        System.out.println("Redéfinie dans Pondre.java");
+    }
+// methode par default pour l interface Reproduction    
+    default void reproduire() {
+        System.out.println("Je ponds des oeufs !");
+    }   
+}
+// appelle la methode par default car reproduire n exite pas dans Reproduction
+Pondre.super.reproduire();
+
+
+
+// ==================================> exception <=====================================================================
 
 
 

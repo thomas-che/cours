@@ -155,3 +155,9 @@ $ find /home/thomas/Documents/tp_l2_info/outil_dev/atelier/ | cut -f8- -d'/' | x
 // faire une jointure, les 2 liste doivent etre trier ; bc => permet d eecuter en bash la ligne
 $ join rp pp | cut -d' ' -f2,4 | tr ' ' '*' | bc
 
+// choisi un nb aleatoire
+$ $RANDOM
+
+// lancer sript en tache de fond &
+$ gedit &
+
