@@ -117,6 +117,7 @@ a {
 
 	background: url("image.jpg") fixed no-repeat left; /* c est le super backgroud, on met tout les proprierter du fond dedans */ 
 	background: url("image1.jpg"),url("image2.jpj"); /* peux metre plusieur image separer pas => , <= */
+	background-size: cover; /* pr que l image prenne toute la place*/
 }
 
 /* si veux que un mot est le fond rouge : dans le html metre ce mot entre <mark>mot</mark> */
