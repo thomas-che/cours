@@ -33,20 +33,46 @@ display_errors = On */
 
 //cree variable
 $nom_var="sa valeur";
+$i=3;
 
 // aficher variable , concatenation
 echo 'du txte ' . $nom_var . ' fin.';
 
 
+// condition if
+if (! $i){
+	echo 'not $i';
+}
+elseif (0<$i AND $j=='michel') {
+	echo 'ok';
+}
+else {
+	echo 'fin';
+}
+
+// condition switch
+switch ($i) {
+	case 1:
+		echo 'i==1';
+		break;
+	
+	default:
+		#...
+		break;
+}
+
+// condition ternaire
+$majeur = ($age >= 18) ? true : false;
 
 
+// boule while
+while ($i <= 10) {
+	echo $i;
+	$i++;
+}
 
-
-
-
-
-
-
-
-
+// boucle for
+for ($i=0; $i<=10; $i++) {
+	# code...
+}
 
