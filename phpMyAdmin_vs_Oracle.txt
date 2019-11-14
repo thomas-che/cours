@@ -1,0 +1,7 @@
+phpMyAdmin			Oracle				Commentaire  
+
+VARCAHR(64)			VARCHAR2(64)		sed -e"s/VARCHAR/VARCHAR2/g" 
+INTEGER(2)			NUMBER(2)
+-- com 				--com   			sur phpMA il faut un espace apres --
+FOREIGN KEY (eMailClient) REFERENCES Client (eMailUtilisateur) 			FOREIGN KEY (eMailClient) REFERENCES Client 		pas besoin du (eMail)= colone pointer dans oracle
+DECIMAL(4,2)		NUMBER(4,2) 		=> 4nb avec 2nb apres la virgule ex: 21.99
