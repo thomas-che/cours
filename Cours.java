@@ -402,16 +402,58 @@ Pondre.super.reproduire();
 
 // ==================================> exception <=====================================================================
 
+// il y a 2 type d exception
+//   1} RuntimeException : ( ArithmeticException ; IllegalArgumentException ; IndexOutOfBoundsException ; NullPointerException )
+//        ne sont pas recuperer, on doit les anticiper en codant
+//   2} IOException , recuperer avec des try catch
+
+// pour debuger 
+try {
+System.out.println(" =>" + (1/0));
+} catch (ClassCastException e) {  // toute la classe des exceptions
+e.printStackTrace();  // idique ou il y a eu l execption
+}
+finally{
+System.out.println("action faite systématiquement");
+}
 
 
+// cree une exception :
+// cree une nouvelle class pour l exception
+public class NbHabException extends Exception {
+    public NbHabException () {
+        System.out.println("nb habitant negatif"); 
+    }
+    public NbHabException (nb) {
+        System.out.println("nb habitant negatif ==> "+nb); 
+    }
+    public NbHabException (String message) {
+        super(message); 
+    }
+}
+// dans la class Ville on modifie le constructeur avec : throws NbHabException , throws => relever exception 
+public Ville (String nomVille , String nomPays , int nbHabitant) throws NbHabException,NomVilleException {
+    if (nbHabitant<0) {
+        throw new NbHabException(nbHabitant); // instacie la class de l execption
+        throw new NbHabException("MSG D ERREURRRRRRRR"); // ou pour utiliser dans le catch : getMessage() qui renvoie le string
+    }
+    else { ... }
 
-
-
+// dans le main...
+// cree obj ville2 avant le bloc try sinon pb car la var ne serai connu que dans le bloc try       
+Ville ville2 = null;
+try {
+    ville2 = new Ville("marseil","france",-10);
+} catch (NbHabException e | NomVilleException e) { 
+    System.out.println(e.getMessage())
+} // recupere l exeption      
 
 
 
 
 // ==================================> java doc <=====================================================================
+
+// generer doc (InteliJ) : tool > generate JavaDoc
 
 /** 
 	* @param  
