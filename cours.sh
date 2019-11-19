@@ -95,6 +95,7 @@ ls -l /etc >/dev/null  2>&1 ; # rediriger sortie d erreur(2) comme la sortie sta
 
 wc fic.txt    # sortie: nb_ligne nb_mot nb_char nom_fichier
 wc -l fic.txt # compte le nb de ligne
+wc -w # nb mot sur la ligne 
 
 IFS = : # redefinit le separateur est ':'
 
@@ -137,6 +138,25 @@ sort -k2 -t',' -n -r villeTri.txt # -k pr trie numerique ; -n est par default: p
 
 # faire une jointure, les 2 liste doivent etre trier ; bc => permet d eecuter en bash la ligne
 join rp pp | cut -d' ' -f2,4 | tr ' ' '*' | bc
+
+# changer le prompt
+# \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$
+PS1="[\d]\u:\w$"
+# ou le lancer avec le source
+source exo1.sh 
+# ou avec le . point blanc point/
+. ./exo1.sh
+
+# seq
+seq 10  # affiche les nb de 0 a 10
+seq 5 10  # affiche les nb de 5 a 10
+seq 3 2 10  # affiche les nb de 3 a 10 avec un pas de 2 
+
+# paste => colle la ligne i du fichier1.txt avec la ligne i du fichier2.txt
+paste fichier1.txt fichier2.txt 
+
+# considere une var comme une chaine de char
+"$var"  # ou var=23 on considere que var="23"
 
 
 #===========> BOUCLE <===========================================================
@@ -189,10 +209,14 @@ done
 # $X,$Y sont des entier
 [ $X -eq $Y ]  # vrai si x = y   ; equal
 [ $X -ne $Y ]  # vrai si x != y  ; negation equal
-[ $X -lt $Y ]  # vrai si x < y   ; left inf
-[ $X -le $Y ]  # vrai si x <= y  ; left inf ou equal 
-[ $X -gt $Y ]  # vrai si x > y   
+[ $X -lt $Y ]  # vrai si x < y   ; less than
+[ $X -le $Y ]  # vrai si x <= y  ; less than ou equal 
+[ $X -gt $Y ]  # vrai si x > y   ; greater than
 [ $X -ge $Y ]  # vrai si x >= y
+
+# test variable 
+[ -z $X ]  # vrai si $X est vide : $X=""
+[ -n $X ]  # vrai si $X est non vide : $X="sfs" 
 
 
 #=================
@@ -208,7 +232,7 @@ ${aaaaafichier##a} #change aaaaafichier en afichier
 #===========> SCRIPT <===========================================================
 
 function () { ... } #fonction en shell
-chemin=$(/home/...)
+chemin= /home/...
 compteur=$(( compteur + 1 ))  # quand soit calculer utilise $(( ))
 $(ls -l $chemin)  # utilise le resultat d une commande (ls -l)
 
@@ -220,5 +244,25 @@ $@ # retourne la liste des arguments
 set -e  # arret du script si erreur
 set -n  # fait semblant de s executer
 set -v  # affiche le scipt en meme temps que s execute
+set -x  # affiche des infos
+
+
+#===========> SCRIPT EXAMPLE <===========================================================
+
+# recuperer un mot au hazard dans un fichier
+nbligne=$(cat /usr/share/dict/words | wc -l)
+ligne=$(($RANDOM%nbligne))
+tail -n $ligne /usr/share/dict/words | head -n 1
+
+# numerote les ligne d un fichier ; on peux utiliser cat -n
+fic= /outil_dev/atelier/data/data/txt/cyrano.txt
+nbligne=$(cat  $fic |wc -l)
+seq $nbligne > nbligne.txt
+paste nbligne.txt $fic
+
+#on lit RP et on prend pr chaque ligne le 1er mot et stocke dans q , 2eme mot dans p
+while read q p; do
+	som=$(echo "$som+$q*$p" | bc )
+done <RP.txt
 
 

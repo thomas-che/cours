@@ -312,10 +312,18 @@ $resultat=$connexion->exec($requete);
 
 
 
+//===========================================================
+
+// on ouvre le fichier et on le stocke dans une var
+$monfichier = fopen('compteur.txt', 'r+');
+fopen('compteur.txt', 'r')  // lecture seule
+fopen('compteur.txt', 'r+') // lecture et ecriture
+fopen('compteur.txt', 'a')  // écriture seule, si le fichier n'existe pas, il est automatiquement créé.
+fopen('compteur.txt', 'a+') // lecture et écriture, Si le fichier n'existe pas, il est créé automatiquement. Attention : le répertoire doit avoir un CHMOD à 777 dans ce cas ! À noter que si le fichier existe déjà, le texte sera ajouté à la fin
 
 
-
-
+// on referme le fichier
+fclose($monfichier);
 
 
 
