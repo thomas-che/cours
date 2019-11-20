@@ -74,6 +74,12 @@ SELECT COUNT(*) as nb_ligne FROM nom_table;
 -- compter le nombre d homme de la table avec de paquet
 SELECT COUNT(*) as nb_homme FROM nom_table GROUP BY sexe;
 
+-- compter que 1 seul fois dans la col possesseur
+SELECT COUNT(DISTINCT possesseur) AS nbpossesseurs FROM jeux_video
+
+-- having resemble a un where, s execute par rapport au group by
+SELECT AVG(prix) AS prix_moyen, console FROM jeux_video GROUP BY console HAVING prix_moyen <= 10
+
 
 -- compter le nombre de ligne mais si dans nom_col=NULL alors il ne sera pas compter
 SELECT COUNT(nom_col) FROM nom_table;
@@ -104,14 +110,18 @@ SELECT * FROM nom_table WHERE prenom LIKE "t%";
 -- recuperer tout les utilisateur qui ont un 'a' dans leur prenom 
 SELECT * FROM nom_table WHERE prenom LIKE "%a%";
 
+-- requette avec renomage dans l affichage alias
+SELECT UPPER(nom) AS nom_maj, possesseur, console, prix FROM jeux_video
 
--- fonction numerique
+-- fonction numerique ; agregat
 SELECT *,ABS() FROM nom_table;    --valeur absolut
 SELECT *,ROUND() FROM nom_table;  --arondir
 SELECT *,CEIL(1.2) FROM nom_table;   --arondir valeur superieur ex: 1.2=>2
 SELECT *,FLOOR() FROM nom_table;  --arondir valeur inferieur 
 SELECT *,TRUNCTE(1.12345,2) FROM nom_table;  --on garde que 2 chifre apres la vigule 
-SELECT *,MOD(6,4) FROM nom_table  -- ou 6%4  ; modulo de 6 par 4 = 2
+SELECT *,MOD(6,4) FROM nom_table;  -- ou 6%4  ; modulo de 6 par 4 = 2
+SELECT AVG(prix) AS moy FROM jeux_video; -- moyenne
+SELECT SUM(prix) AS prix_total FROM jeux_video; -- somme ; 
 
 
 -- fonction texte
@@ -127,16 +137,37 @@ SELECT *,TRIM('   chaine    ') FROM nom_table;  --suprime les espace avant et ap
 SELECT *,TRIM(BOTH 'x' FROM 'xxxchainexxx') FROM nom_table;  --suprime les x avant et apres la chaine ; sup x debut: BOTH=>LEADING ; fin: TRAILING
 
 
--- fonction date
+-- fonction date 
 SELECT *,ADDDATE(birthday,10) FROM nom_table;  --ajoute 10jours a la date d aniv  ; DATE_ADD(birthday,INTERVAL..) pareil mais ne suporte que les interval
 SELECT *,ADDDATE(birthday,INTERVAL 1 YEAR) FROM nom_table;  --ajoute 1 an a la date d aniv 
 SELECT *,SUBDATE(birthday,INTERVAL 1 HOUR) FROM nom_table;  --suprime 1heure a la date d aniv
 SELECT *,ADDTIME(birthday,'1:0:0') FROM nom_table;  --ajoute 1heure
 SELECT *,ADDDATE(birthday,INTERVAL 1 YEAR) FROM nom_table WHERE birthday<SUBDATE('2017-10-23',INTERVAL 18 YEAR) ; -- personne ager de plus de 18ans 
 
+-- opperation sur les date: = ; <= ; ....
+SELECT pseudo, message, date FROM minichat WHERE date = '2010-04-02'
+
+-- si une date est entrer 2 dates
+SELECT pseudo, message, date FROM minichat WHERE date BETWEEN '2010-04-02 00:00:00' AND '2010-04-18 00:00:00'
+
+-- date : datetime: YYYY-MM-DD HH:MM:SS
+INSERT INTO minichat(pseudo, message, date) VALUES('Mateo', 'Message !', NOW()); -- now() => date a l instatnt t
+
+-- renvoie juste le jours de la date (ex: d enregistrement du msg)
+SELECT pseudo, message, DAY(date) AS jour FROM minichat;  -- DAY(),MONTH(),YEAR()
+
+-- aficher la date sous un certain format
+-- le 27/03/2010 à 18h31min11s dans date_formater
+SELECT pseudo, message, DATE_FORMAT(date, 'le %d/%m/%Y à %Hh%imin%ss') AS date_formater FROM minichat 
 
 
+-- jointure juste avec ',' ; presise les colone que l on garde de chaque table
+SELECT jeux_video.nom, proprietaires.prenom FROM proprietaires, jeux_video
 
+-- ancienne syntaxe
+SELECT j.nom nom_jeu, p.prenom prenom_proprietaire FROM proprietaires p, jeux_video j WHERE j.ID_proprietaire = p.ID
+-- nouvelle syntaxe du join
+SELECT j.nom nom_jeu, p.prenom prenom_proprietaire FROM proprietaires p INNER JOIN jeux_video j ON j.ID_proprietaire = p.ID
 
-
-
+-- jointure externe: LEFT => recupere toute la table de gauche, si pas de corespondance alors NULL
+SELECT j.nom nom_jeu, p.prenom prenom_proprietaire FROM proprietaires p LEFT JOIN jeux_video j ON j.ID_proprietaire = p.ID

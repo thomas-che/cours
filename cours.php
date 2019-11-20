@@ -192,9 +192,15 @@ if ($_GET['repeter'] >= 1 AND $_GET['repeter'] <= 100)
 // htmlspecialchars => fait en sorte que l on recupere que des chars 
 <p> Bonjour : < ?php echo htmlspecialchars( $_POST['prenom'] ) ; ? ></p>
 
+// nl2br() permet de convertir les retour a la ligne en balise br html
+echo nl2br(htmlspecialchars($donnees['contenu']));
+
 // test dans les form si c est bloque
 <p> <script type="text/javascript">alert('C\'est pas bloquée')</script> !</p>
 
+
+// redirection avec header
+header("location: index.php"); 
 
 
 //================> ENVOI FICHIER <=====================================================================
@@ -312,6 +318,47 @@ $resultat=$connexion->exec($requete);
 
 
 
+//================> Session Cookie <=====================================================================
+
+// demarer la session ; 1 seul par page et avant <!DOCTYPE html>...
+session_start();
+// suivie de parametre key value
+$_SESSION['prenom'] = 'Jean';
+$_SESSION['nom'] = 'Dupont';
+$_SESSION['age'] = 24
+
+// fin de la session 
+session_destroy();
+
+// destruction propre de la session
+$_SESSION = array();
+if (isset($_COOKIE[session_name()])) {
+    setcookie(session_name(), '', time()-42000, '/');
+}
+session_destroy();
+
+// suprimer une valeur de la session
+unset($_SESSION['login']);
+
+// pr utiliser les donner de session dans une autre page : faire au debut de la page session_start()
+$_SESSION['prenom'] 
+
+// quand dans notre fichier est pas le index.php pour eviter de planter
+if (strlen(session_id()) < 1) session_start();  // 0 si pas de session start
+
+
+// cookie ecrit avant le code html
+// 1 cookie = 1 info ; cookie a une durer de vie, time()=temps ecouler depuis le 01/01/1970
+setcookie('pseudo', 'M@teo21', time() + 365*24*3600 , chemin , domaine set , secure);
+// chemin : destination où le nav doit envoyer le cookie
+// domaine set : nom du dommaine a partir duquel peut etre luss le cookie ou utilise $SERVER_NAME
+// secure : 0 si la co n est pas securiser sinon 1
+
+// cookie httpOnly pour eviter a faille XSS
+setcookie('pseudo', 'M@teo21', time() + 365*24*3600, null, null, false, true);
+
+
+
 //===========================================================
 
 // on ouvre le fichier et on le stocke dans une var
@@ -321,9 +368,72 @@ fopen('compteur.txt', 'r+') // lecture et ecriture
 fopen('compteur.txt', 'a')  // écriture seule, si le fichier n'existe pas, il est automatiquement créé.
 fopen('compteur.txt', 'a+') // lecture et écriture, Si le fichier n'existe pas, il est créé automatiquement. Attention : le répertoire doit avoir un CHMOD à 777 dans ce cas ! À noter que si le fichier existe déjà, le texte sera ajouté à la fin
 
-
 // on referme le fichier
 fclose($monfichier);
+
+// pour ligne la premier ligne du fichier ; il faudra faire une boucle pr le lire en entier
+$ligne = fgets($monfichier);
+
+// pour recuperer le 1er char
+$charactere = fgetc($monfichier);
+
+// ecrir dans le fichier a l endroit ou est le curseur
+fputs($monfichier, 'Texte à écrire');
+// remetre le curseur au debut du fichier
+fseek($monfichier, 0); 
+// j ai  impresion que l on ecrase l ancienne donner
+
+
+//================> expressions régulieres <=====================================================================
+
+// choix de 2 bibliotech : POSIX ou PCRE, POSIX(plus lent) < PCRE(plus complexe) donc on prend PCRE
+
+
+// recherche un mot dans une chaine de char ; regex = expression reguliere
+if (preg_match("#Ma regex#", "Ce dans quoi vous faites la recherche")) {
+    echo 'Le mot que vous cherchez se trouve dans la chaîne';
+}
+else { 
+    echo 'Le mot que vous cherchez ne se trouve pas dans la chaîne'; 
+}
+
+// la regex a des options, apres le 2eme # 
+"#Ma regex#Options"
+
+"#Ma regex" // on recherche exactemet la regex ex: toto!=Toto
+"#Ma regex#i" // on ne fait pas attention au majuscule et minuscule ex: toto=Toto=TOTO
+
+// | => OU  , soit guitare soit piano
+preg_match("#guitare|piano#", "j aime la guitare") // vrai
+
+
+preg_match("#^guitare#", "j aime la guitare") // ^ , regex au dubut de la phrase // faux
+preg_match("#guitare$#", "j aime la guitare") // $ , regex a la fin de la phrase // vrai
+
+
+// classe de caractere :
+preg_match("#gr[ioa]s#", "le chat est gris")    // on accept gris ou gros ou gras // vrai
+preg_match("#gr[a-z]s#", "le chat est gris")    // on accept tout les char de a à z // vrai
+preg_match("#gr[a-zA-Z]s#", "le chat est gris") // on accept tout les char de a à z et A à Z // vrai
+preg_match("#gr[0-9]s#", "le chat est gris")    // on accept tout les chiffres de 0 a 9 // vrai
+preg_match("#gr[^ao]s#", "le chat est gris")    // on accept tout sauf gras ou gros // vrai
+
+
+// quantificateur :
+preg_match("#Ay(xy)?#", "Ayxy")   // ? , regarde si xy est present 0 ou 1 fois ; au plus 1 fois //vrai
+preg_match("#Ay(xy)+#", "Ay")     // + , regarde si xy est present 1 ou x fois ; au moins 1 fois //faux
+preg_match("#Ay(xy)*#", "Ayxyxy") // * , regarde si xy est present 0 ou 1 ou x fois //vrai
+
+preg_match("#Ay(xy){1}#", "Ayxyxy")   // { } , regarde si xy est present 1 fois //vrai: Ayxy+xy donc le patern est bien present
+preg_match("#^Ay(xy){1}$#", "Ayxyxy") // { } , regarde si xy est present exactement 1 fois //faux
+
+preg_match("#^[0-9]{3,6}$#", "6666") // {3,6} , regarde si xy est present entre 3 et 6 fois //vrai
+preg_match("#^[0-9]{3,}$#", "6666")  // {3,} ,  regarde si xy est present entre 3 et infini fois //vrai
+
+
+
+
+
 
 
 
