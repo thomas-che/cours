@@ -430,18 +430,81 @@ preg_match("#^Ay(xy){1}$#", "Ayxyxy") // { } , regarde si xy est present exactem
 preg_match("#^[0-9]{3,6}$#", "6666") // {3,6} , regarde si xy est present entre 3 et 6 fois //vrai
 preg_match("#^[0-9]{3,}$#", "6666")  // {3,} ,  regarde si xy est present entre 3 et infini fois //vrai
 
+preg_match("#.#", "azerty") // . , on veux n impote quel char //vrai
+preg_match("#.{3}#", "aze") // .{3} , on veux 3 char //vrai
+preg_match("#\.#", "azert") // \. , on echape le '.' pour le rechercher //faux
+
+preg_match("#\d#", "azert") // \d , revient a ecrir [0-9] //faux
+preg_match("#\D#", "azert") // \D , revient a ecrir [^0-9] //faux
+preg_match("#\w#", "azert") // \w , revient a ecrir [a-zA-Z0-9_] //vrai
+preg_match("#\W#", "azert") // \W , revient a ecrir [^a-zA-Z0-9_] //faux
+preg_match("#\t#", "azert") // \t , indique une tabulation //faux
+preg_match("#\n#", "azert") // \n , indique retour ligne //faux
+preg_match("#\r#", "azert") // \r , indique retour chariot //faux
+preg_match("#\s#", "azert") // \s , indique un espace blanc //faux
+preg_match("#\S#", "azert") // \S , indique n est pas un espace blanc (\t \n \r) //vrai
 
 
+// verifier un num de tel
+preg_match("#^0[1-68][0-9]{8}$#", "0102030405") // vrai
+preg_match("#^0[1-68]([-. ]?[0-9]{2}){4}$#", "01-02-03-04-05") //verifier num avec [-. ] entre les num // vrai
+
+// verifier une adress mail
+preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", " j.dupont_2@orange.fr") //vrai
+
+// verifier si on a un format de date
+preg_match("#^[0-9]{2}/[0-9]{2}/[0-9]{4}$#", "05/09/2001")
+preg_match("#^([0-9]{2}/){2}[0-9]{4}$#", "05/09/2001") // date 'symplifier'
 
 
+// capture :
+$var = preg_replace(pattern, replacement, subject);
+// il peux y avoir 99 champs dans le regex ; $0 = le regex complet
+// retoune l anner car elle est dans la 2eme (...)
+$anne = preg_replace("#^([0-9]{2}/){2}([0-9]{4})$#", "$2" , "05/09/2001"); 
+// retoune tout ce qui est dans le champs remplcement
+$anne = preg_replace("#^([0-9]{2}/){2}([0-9]{4})$#", "===> $2" , "05/09/2001"); 
+// reecrit la date avec des espaces entre
+$date=preg_replace("#^([0-9]{2})/([0-9]{2})/([0-9]{4})$#", "$1 $2 $3", "05/09/2001")
+// date pr sql YYYY-MM-DD
+$date=preg_replace("#^([0-9]{2})/([0-9]{2})/([0-9]{4})$#", "$3-$2-$1", "05/09/2001")
 
 
+// remplacement
+$texte = preg_replace('#\[b\](.+)\[/b\]#i', '<strong>$1</strong>', $texte);
 
 
+// cree propre bbCode
+$texte="Ce texte est [b]important[/b], il faut me [b]comprendre[/b] ! [color=blue]texte en bleu [/color] ";
+
+// [b][/b] // pour mettre du texte en gras ; l option U (Ungreedy) permet de s arreter des que l on voit [/b] 
+$texte = preg_replace('#\[b\](.+)\[/b\]#isU', '<strong>$1</strong>', $texte);
+
+// [i][/i] // pour mettre du texte en italique ;
+$texte = preg_replace('#\[i\](.+)\[/i\]#isU', '<em>$1</em>', $texte);
+
+// [color=red][/color] // pour colorer le texte (il faudra laisser le choix entre plusieurs couleurs).
+$texte = preg_replace('#\[color=(red|green|blue|yellow|purple|olive)\](.+)\[/color\]#isU', '<span style="color:$1">$2</span>', $texte);
 
 
+// transformer un lien http://.... directement en lien cliquable
+$texte = preg_replace('#http://[a-z0-9._/-]+#i', '<a href="$0">$0</a>', $texte);
 
 
+// exemple de bbcode complet
+if (isset($_POST['texte']))
+{
+    $texte = stripslashes($_POST['texte']); // On enlève les slashs qui se seraient ajoutés automatiquement
+    $texte = htmlspecialchars($texte); // On rend inoffensives les balises HTML que le visiteur a pu rentrer
+    $texte = nl2br($texte); // On crée des <br /> pour conserver les retours à la ligne
+    
+    // On fait passer notre texte à la moulinette des regex
+    $texte = preg_replace('#\[b\](.+)\[/b\]#isU', '<strong>$1</strong>', $texte);
+    $texte = preg_replace('#\[i\](.+)\[/i\]#isU', '<em>$1</em>', $texte);
+    $texte = preg_replace('#\[color=(red|green|blue|yellow|purple|olive)\](.+)\[/color\]#isU', '<span style="color:$1">$2</span>', $texte);
+    $texte = preg_replace('#http://[a-z0-9._/-]+#i', '<a href="$0">$0</a>', $texte);
 
-
+    // Et on affiche le résultat. Admirez !
+    echo $texte . '<br /><hr />';
+}
 

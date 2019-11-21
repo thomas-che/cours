@@ -158,7 +158,7 @@ SELECT pseudo, message, DAY(date) AS jour FROM minichat;  -- DAY(),MONTH(),YEAR(
 
 -- aficher la date sous un certain format
 -- le 27/03/2010 à 18h31min11s dans date_formater
-SELECT pseudo, message, DATE_FORMAT(date, 'le %d/%m/%Y à %Hh%imin%ss') AS date_formater FROM minichat 
+SELECT pseudo, message, DATE_FORMAT(date, 'le %d/%m/%Y à %Hh%imin%ss') AS date_formater FROM minichat ;
 
 
 -- jointure juste avec ',' ; presise les colone que l on garde de chaque table
@@ -171,3 +171,31 @@ SELECT j.nom nom_jeu, p.prenom prenom_proprietaire FROM proprietaires p INNER JO
 
 -- jointure externe: LEFT => recupere toute la table de gauche, si pas de corespondance alors NULL
 SELECT j.nom nom_jeu, p.prenom prenom_proprietaire FROM proprietaires p LEFT JOIN jeux_video j ON j.ID_proprietaire = p.ID
+
+
+-- utiliser des regex dans sql
+SELECT nom FROM visiteurs WHERE ip REGEXP '^84\.254(\.[0-9]{1,3}){2}$';
+-- Sélectionne tous les noms de la tablevisiteursdont l'IP commence par « 84.254 » et se termine par deux autres nombres de un à trois chiffre(s) (ex. : 84.254.6.177)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
