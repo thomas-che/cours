@@ -121,6 +121,7 @@ $chaineMajuscule = strtoupper($chaine);
 
 // recupere le nb du jours en cours
 $jour = date('d'); // 'Y' ; 'm' ; 'd' ; 'H' = heure ; 'i' = minute
+$date = date('Y-m-d') //2019-11-21
 
 // cree function
 function direBj ($nom)
@@ -283,6 +284,11 @@ $resultat->closeCursor();
 while ($ligne=$resultat->fetch()) { 
     echo '<p>' . $ligne['nom'] . ' : ' . $ligne['msg'] . '</p>' ; // $ligne['nom'] => acces au champ nom de la ligne 
 }
+
+if (!$ligne) {
+    // cela veux dire que $ligne ne recupere rien
+}
+
 
 // 2} on met le resultat dans un tableau d obejct
 $resultat-> setFetchMode(PDO::FETCH_OBJ);
@@ -507,4 +513,32 @@ if (isset($_POST['texte']))
     // Et on affiche le résultat. Admirez !
     echo $texte . '<br /><hr />';
 }
+
+
+//================> Securiter <=====================================================================
+
+
+// faille XSS , dans un champs ou l on entre du texte, on rentre un code JS qui permet d acceder a des donner priver ou fait planter le site
+// htmlspecialchars => fait en sorte que l on recupere que des chars 
+<p> Bonjour : < ?php echo htmlspecialchars( $_POST['prenom'] ) ; ? ></p>
+
+// test dans les form si c est bloque
+<p> <script type="text/javascript">alert('C\'est pas bloquée')</script> !</p>
+
+// hacher un mdp (selon la fonction : PASSWORD_DEFAULT ) pour le stoquer dans la bd
+$mdp='abcd';
+$mdp_hache= password_hash($mdp,PASSWORD_DEFAULT);
+
+// revoie true si les mdp sont egaux
+$isPasswordCorrect= password_verify($mdp, $mdp_hache )
+
+
+
+
+
+
+
+
+
+
 
