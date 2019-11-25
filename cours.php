@@ -158,7 +158,13 @@ if ($_GET['repeter'] >= 1 AND $_GET['repeter'] <= 100)
 
 
 
-//================> FORMULAIRE <=======================================================================
+/*#############################*/
+/*                             */
+/*                             */
+/*        FORMULAIRE           */
+/*                             */
+/*                             */
+/*#############################*/
 
 
 // formulaire avec la methode post: envoie plus de donner et donner non visible dans l url
@@ -204,7 +210,13 @@ echo nl2br(htmlspecialchars($donnees['contenu']));
 header("location: index.php"); 
 
 
-//================> ENVOI FICHIER <=====================================================================
+/*#############################*/
+/*                             */
+/*                             */
+/*       ENVOI FICHIER         */
+/*                             */
+/*                             */
+/*#############################*/
 
 
 // envoie de fichier ; enctype => le navigateur sait qu il va envoyer un fichier
@@ -244,8 +256,13 @@ $_COOKIE ; // variable stockee sur le pc du client pendant x temps
 
 
 
-//================> phpMyAdmin <=========================================================================
-
+/*#############################*/
+/*                             */
+/*                             */
+/*         PHPMYADMIN          */
+/*                             */
+/*                             */
+/*#############################*/
 
 // dans un fichier connect.php 
 < ?php
@@ -277,7 +294,8 @@ $resultat=$connexion->query("SELECT nom FROM ex1 WHERE test=2");
 $resultat->closeCursor();
 
 
-// =====> lire ligne par ligne la table <=========
+
+// =======> lire ligne par ligne la table <======================================================
 
 // 1} methode simple
 // fetch() => renvoie un tableau et lit chaque ligne de le table ; fetch renvoie false quand il n y a plus de ligne a lire
@@ -324,7 +342,13 @@ $resultat=$connexion->exec($requete);
 
 
 
-//================> Session Cookie <=====================================================================
+/*#############################*/
+/*                             */
+/*                             */
+/*       SESSION COOKIE        */
+/*                             */
+/*                             */
+/*#############################*/
 
 // demarer la session ; 1 seul par page et avant <!DOCTYPE html>...
 session_start();
@@ -390,10 +414,15 @@ fseek($monfichier, 0);
 // j ai  impresion que l on ecrase l ancienne donner
 
 
-//================> expressions régulieres <=====================================================================
+/*#############################*/
+/*                             */
+/*                             */
+/*  EXPRESSIONS REGULIERES     */ 
+/*                             */
+/*                             */
+/*#############################*/
 
 // choix de 2 bibliotech : POSIX ou PCRE, POSIX(plus lent) < PCRE(plus complexe) donc on prend PCRE
-
 
 // recherche un mot dans une chaine de char ; regex = expression reguliere
 if (preg_match("#Ma regex#", "Ce dans quoi vous faites la recherche")) {
@@ -515,8 +544,13 @@ if (isset($_POST['texte']))
 }
 
 
-//================> Securiter <=====================================================================
-
+/*#############################*/
+/*                             */
+/*                             */
+/*          SECURITE           */
+/*                             */
+/*                             */
+/*#############################*/
 
 // faille XSS , dans un champs ou l on entre du texte, on rentre un code JS qui permet d acceder a des donner priver ou fait planter le site
 // htmlspecialchars => fait en sorte que l on recupere que des chars 

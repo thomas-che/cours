@@ -18,6 +18,9 @@ ll | grep text		# ex: ll | grep opt	-> montre que fichier opt
 # liste procecus consomation en direct
 top	
 
+# adresse ip local
+ip addr show
+
 # raccourci de comande ; lltc = ls et la
 alias lltc='ls -la --color=auto' 
 
@@ -159,8 +162,13 @@ paste fichier1.txt fichier2.txt
 "$var"  # ou var=23 on considere que var="23"
 
 
-#===========> BOUCLE <===========================================================
-
+###############################
+#                             #
+#                             #
+#           BOUCLE            #
+#                             #
+#                             #
+###############################
 
 for i in exp1 exp2 ; do
 	# action
@@ -190,8 +198,13 @@ while [ condition ] ; do
 done
 
 
-#===========> CONDITION <===========================================================
-
+###############################
+#                             #
+#                             #
+#         CONDITION           #
+#                             #
+#                             #
+###############################
 
 [ -e fic.txt ] # vrai si le fichier fic.txt existe
 [ -d fic.txt ] # vrai si le repertoire/dossier fic.txt existe
@@ -219,7 +232,7 @@ done
 [ -n $X ]  # vrai si $X est non vide : $X="sfs" 
 
 
-#=================
+#=======================================================
 
 # substitution de variable
 ${var}  # même chose que sans les accolades ($var) ; ex: $HOME1 n esxite pas alors que {$HOME1} vas dans $HOME puis dans 1
@@ -229,7 +242,13 @@ ${var#f}ff #chage f en ff
 ${aaaaafichier##a} #change aaaaafichier en afichier
 
 
-#===========> SCRIPT <===========================================================
+###############################
+#                             #
+#                             #
+#           SCRIPT            #
+#                             #
+#                             #
+###############################
 
 function () { ... } #fonction en shell
 chemin= /home/...
@@ -247,7 +266,13 @@ set -v  # affiche le scipt en meme temps que s execute
 set -x  # affiche des infos
 
 
-#===========> SCRIPT EXAMPLE <===========================================================
+###############################
+#                             #
+#                             #
+#       SCRIPT EXAMPLE        #
+#                             #
+#                             #
+###############################
 
 # recuperer un mot au hazard dans un fichier
 nbligne=$(cat /usr/share/dict/words | wc -l)

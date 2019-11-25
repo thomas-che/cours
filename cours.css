@@ -147,7 +147,13 @@ mark{
 table,tr,td { empty-cells:hide ; border: 1px solid black; border-collapse:separate;}
 
 
-/*===================> pseudo Element <=============================================================*/
+/*#############################*/
+/*                             */
+/*                             */
+/*      PSEUDO ELEMENT         */
+/*                             */
+/*                             */
+/*#############################*/
 	
 /*survol de la souris */
 p:hover {
@@ -179,7 +185,13 @@ input[type="submit"] {
 }
 
 
-/*===================> block ; margin ; pading <====================================================*/
+/*#############################*/
+/*                             */
+/*                             */
+/*    BLOCK MARGIN PADING      */
+/*                             */
+/*                             */
+/*#############################*/
 
 /* balise inline <a> se trouve dans une background: lise block ; balise <span> => c est le div mais en balise de type inline*/
 /* block prend toute la largeur ; <h1>,<p> est une balise de type block ; balise <div>*/
@@ -217,7 +229,13 @@ p{
 }
 
 
-/*===================> Flexbox <====================================================================*/
+/*#############################*/
+/*                             */
+/*                             */
+/*           FLEXBOX           */
+/*                             */
+/*                             */
+/*#############################*/
 
 /* metre un dans un grand <div id="conteneur"> toute mes autre balise div*/
 
@@ -262,7 +280,13 @@ p{
 }
 
 
-/*===================> avant Flexbox ?? <===========================================================*/
+/*#############################*/
+/*                             */
+/*                             */
+/*       AVANT FLEXBOX         */
+/*                             */
+/*                             */
+/*#############################*/
 
 /* methode utiliser pour agencer la page comme on voulais avant flexbox*/
 
@@ -293,7 +317,8 @@ nav {
 }
 
 
-/*========================*/
+/*===========================================*/
+
 /* dans le html ; pour untiliser un autre doc avec les regle css*/
 <link rel="stylesheet" media="screen and (max-width: 1280px)" href="petite_resolution.css" />
 /* OU dans le meme fichier css */
@@ -302,131 +327,6 @@ nav {
 @media handheld {
 	/* les tel */
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

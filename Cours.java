@@ -244,7 +244,14 @@ public static int getNum () {  // getter doit etre declarer static car var stati
 }
 
 
-// ==================================> heritage <=====================================================================
+
+/*#############################*/
+/*                             */
+/*                             */
+/*         HERITAGE            */
+/*                             */
+/*                             */
+/*#############################*/
 
 // cree class
 public class Ville {
@@ -266,7 +273,13 @@ public String decrisToi() {  // signature de la methode
 
 
 
-// ==================================> polymorphisme <================================================================
+/*#############################*/
+/*                             */
+/*                             */
+/*        POLYMORPHISME        */
+/*                             */
+/*                             */
+/*#############################*/
 
 // on fait un traitement sur un objet sans connaitre son type
 // covariance des variables : objet de type Ville peut contenir un objet de type Capitale
@@ -310,7 +323,7 @@ public final int maMethode(){
 }
 
 
-//===================================
+//==============================================
 
 // package : com.exo1 => en miniscule et tj par un com,fr,... com.package_ => metre le _ pour utiliser des mots deja utiliser par java
 // public => la porter de la class est definit endehors du package
@@ -322,8 +335,13 @@ public class A {
 import com.exo2;
 
 
-
-// ==================================> abstract <=====================================================================
+/*#############################*/
+/*                             */
+/*                             */
+/*         ABSTACT             */
+/*                             */
+/*                             */
+/*#############################*/
 
 // abstract => rend une methode inutile dans la class mere mais utile dans class fille
 // si methode abstract alors la class est aussi abstract !!
@@ -342,7 +360,13 @@ this.getClass();
 
 
 
-// ==================================> Interfaces <===================================================================
+/*#############################*/
+/*                             */
+/*                             */
+/*         INTERFACE           */
+/*                             */
+/*                             */
+/*#############################*/
 
 // cree une interface avec des methode abstrac, pas bessoin du mot abstarct devant les methode car une interface est par default abstract
 public interface I{ 
@@ -400,7 +424,13 @@ Pondre.super.reproduire();
 
 
 
-// ==================================> exception <=====================================================================
+/*#############################*/
+/*                             */
+/*                             */
+/*         EXCEPTION           */
+/*                             */
+/*                             */
+/*#############################*/
 
 // il y a 2 type d exception
 //   1} RuntimeException : ( ArithmeticException ; IllegalArgumentException ; IndexOutOfBoundsException ; NullPointerException )
@@ -450,8 +480,13 @@ try {
 
 
 
-
-// ==================================> java doc <=====================================================================
+/*#############################*/
+/*                             */
+/*                             */
+/*         JAVA DOC            */
+/*                             */
+/*                             */
+/*#############################*/
 
 // generer doc (InteliJ) : tool > generate JavaDoc
 
@@ -507,17 +542,6 @@ try {
         return vector;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
