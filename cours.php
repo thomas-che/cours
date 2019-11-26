@@ -569,10 +569,129 @@ $isPasswordCorrect= password_verify($mdp, $mdp_hache )
 
 
 
+/*#############################*/
+/*                             */
+/*                             */
+/*             MVC             */
+/*                             */
+/*                             */
+/*#############################*/
 
 
+/////////////////
+//      1      //  model/model.php ; fontion qui interagise avec le BDD
+/////////////////
+
+// faire la connction a la bdd
+require_once('connect.php');
+function getConnect(){
+    $connexion=new PDO('mysql:host='.SERVEUR.';dbname='.BDD,USER,PASSWORD) ;
+    $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $connexion->query("SET NAMES UTF8");
+    return $connexion;
+}   
+
+// retourn un tableau object
+function getDiscussion(){
+    $connexion=getConnect();
+    $requete="SELECT * FROM forum ORDER BY id DESC LIMIT 10";
+    $resultat=$connexion->query($requete) ;
+    $resultat-> setFetchMode(PDO::FETCH_OBJ);
+// pour avoir un tableau d objet
+    $discussion=$resultat->fetchall();
+    $resultat->closeCursor();
+    return $discussion;
+}
+
+/* autre fonction ... */
 
 
+/////////////////
+//      2      //   view/gabarit.php ; htlm du site
+/////////////////
 
+<body>
+    <form action="forum.php" method="POST">
+        // ...
+    </form>
+
+    < ?php  echo $contenu ; ? > // $contenu contient la partie dynamique du site
+
+    <form action="forum.php" method="POST">
+        // ...
+    </form>
+</body>
+
+
+/////////////////
+//      3      //   view/view.php ; afficher qqch
+/////////////////
+
+// utilise le tableau d object
+function afficherDiscussion($discussion){
+    $contenu='';
+    foreach ($discussion as $ligne) {
+        $contenu.='<p><strong>'.$ligne->nom.'</strong> : '.$ligne->msg.' ['.$ligne->id.']</p>';
+    }
+    require_once('gabarit.php'); // la discussion sera entre les 2 form
+}
+
+// utilise le $contenu pour afficher l erreur et revire au contoleur frontal (forum) 
+function afficherErreur($erreur){
+    $contenu='<p>'.$erreur.'</p><p><a href="forum.php"/> Revenir au forum </a></p>';
+    require_once('gabarit.php');
+}
+
+
+/////////////////
+//      4      //  controller/controller.php ; fait les control et appel de function
+/////////////////
+
+require_once('model/model.php');
+require_once('view/view.php');
+
+// acceuil du site
+function CtlAcceuil() {
+    $discussion=getDiscussion(); // dans le model
+    afficherDiscussion($discussion); // dans veiw
+}
+
+function CtlAjouterMessage($nom,$msg){
+    if (!empty($nom) && !empty($msg)){  // control si les var ne sont pas vide
+        ajouterMessage($nom,$msg);  // appel dans le model
+    }
+    else {
+        throw new Exception("pseudo et/ou message est vide"); // cree une Exception pour la function afficherErreur
+    }
+    CtlAcceuil();
+}
+
+// afficher n importe quelle erreur
+function CtlErreur($erreur){
+    afficherErreur($erreur);
+}
+
+
+/////////////////
+//      5      //  controller frontal: index.php (forum) ; le block try catch
+/////////////////
+
+require_once('controller/controller.php');
+
+try{
+    if (isset($_POST['envoyer'])) {
+        $nom=htmlspecialchars($_POST['nom']);
+        $msg=htmlspecialchars($_POST['msg']);
+        CtlAjouterMessage($nom,$msg);
+    }
+    elseif { /* ... */ }
+    else{
+        CtlAcceuil();
+    }
+}
+catch(Exception $e) {
+    $msg=$e->getMessage(); // recupere le msg de l Exception
+    CtlErreur($msg);  // le msg sera afficher
+}
 
 
