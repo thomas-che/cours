@@ -70,6 +70,20 @@ git remote add origin https:#github.com/thomas-che/cours.git
 # faire add sur tout le dossier
 git add *
 
+# suprimer un fichier
+git rm nom_du_fichier
+
+# cacher un fichier du versinage
+git rm --cached nom_du_fichier
+
+# restaurer le fichier sup
+git checkout HEAD -- nom_du_fichier
+
+# on revien a la version commiter
+git reset nom_du_fichier 
+
+# voir la diff entre 2 commit
+git diff <sha1...> <sha2...>
 
 # voir sur quelle branche on est
 git branch
@@ -136,3 +150,10 @@ git config --global credential.helper 'cache --timeout=3600'
 
 # forcer un push
 git push --force origin master  # suprime les commits des autres machines
+
+
+git remote -v
+git remote show origin
+git remote show partage
+git config branch.master.remote partage
+git pull -v

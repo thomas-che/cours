@@ -85,6 +85,14 @@ foreach ($variable as $key => $value) {
     echo '<p>' . $key . ' = ' . $value . '</p>';
 }
 
+// pr debugage
+echo var_dump($_POST);
+foreach ($_POST as $key => $value ) {
+    echo '</br>===>'.$key.' = '.$value;
+    if (is_numeric($key)) {
+        echo ' --test--> = nb!!! '.$key;
+    }
+}
 
 
 // tableau
@@ -156,6 +164,9 @@ $_GET['repeter'] = (int) $_GET['repeter'];
 // ensuite on verifi si il a des valeurs raisonable
 if ($_GET['repeter'] >= 1 AND $_GET['repeter'] <= 100)
 
+// test sur le type de la var 
+is_numeric($id) // true si c est un nb
+ctype_digit($txt) // true si txt ne contien que des nb entier 
 
 
 /*#############################*/
@@ -314,6 +325,14 @@ $resultat-> setFetchMode(PDO::FETCH_OBJ);
 while ($ligne=$resultat->fetch()) {
     echo '<p>' . $ligne->nom . ' : ' . $ligne->msg . '</p>' ; // $ligne->nom => acces au champ nom de la ligne 
 }
+
+// ou
+$resultat->setFetchMode(PDO::FETCH_OBJ);
+$resultatRecherche=$resultat->fetchall();
+$resultat->closeCursor();
+foreach ($resultatRecherche as $ligne) { /*...*/ }
+
+
 
 // utilisation du $_POST
 // isset($_POST) => est ce qu il existe ? ; !empty($_POST['nom']) => le champs nom est non vide ?
