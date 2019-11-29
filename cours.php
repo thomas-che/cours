@@ -164,9 +164,6 @@ $_GET['repeter'] = (int) $_GET['repeter'];
 // ensuite on verifi si il a des valeurs raisonable
 if ($_GET['repeter'] >= 1 AND $_GET['repeter'] <= 100)
 
-// test sur le type de la var 
-is_numeric($id) // true si c est un nb
-ctype_digit($txt) // true si txt ne contien que des nb entier 
 
 
 /*#############################*/
@@ -585,7 +582,12 @@ $mdp_hache= password_hash($mdp,PASSWORD_DEFAULT);
 // revoie true si les mdp sont egaux
 $isPasswordCorrect= password_verify($mdp, $mdp_hache )
 
+// test sur le type de la var 
+is_numeric($id) // true si c est un nb
+ctype_digit($txt) // true si txt ne contien que des nb entier 
 
+//forcer un cast
+$id=intval($id);
 
 
 /*#############################*/
