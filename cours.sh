@@ -15,6 +15,9 @@ history
 # recherche text dans resultat avant le pipe=( | )
 ll | grep text		# ex: ll | grep opt	-> montre que fichier opt
 
+# le -n permet d avoir les num de ligne
+grep -n "^debut" fichier1.txt
+
 # liste procecus consomation en direct
 top	
 
@@ -112,6 +115,7 @@ $RANDOM
 
 # transforme une chaine de caractere
 tr 'a' '1' # mais attend une entrer au clavier
+tr -d '\r' # suprime les retour chariot 
 tr -s ' '  // ex: remplace '   ' par ' ' # remplacer plusieur ocurence avec tr
 tr 'a-mn-z' 'n-za-m' # transforme chaine avec un decalage de 13 charactere : ROT13
 tr 'a-z' 'n-za-m' # peut etre ecrit comme
@@ -160,6 +164,12 @@ paste fichier1.txt fichier2.txt
 
 # considere une var comme une chaine de char
 "$var"  # ou var=23 on considere que var="23"
+
+# affiche l encodage du fichier
+file fichier1.txt
+
+# affiche le coadage du fichier
+hexdump -C fichier1.txt | head
 
 
 ###############################

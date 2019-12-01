@@ -202,18 +202,6 @@ if ($_GET['repeter'] >= 1 AND $_GET['repeter'] <= 100)
 // on voit la balise dans le code source donc pas vraiment cacher
 <input type="hidden" name="pseudo" value="Mateo21" />
 
- 
-// faille XSS , dans un champs ou l on entre du texte, on rentre un code JS qui permet d acceder a des donner priver ou fait planter le site
-// htmlspecialchars => fait en sorte que l on recupere que des chars 
-<p> Bonjour : < ?php echo htmlspecialchars( $_POST['prenom'] ) ; ? ></p>
-
-// nl2br() permet de convertir les retour a la ligne en balise br html
-echo nl2br(htmlspecialchars($donnees['contenu']));
-
-// test dans les form si c est bloque
-<p> <script type="text/javascript">alert('C\'est pas bloquée')</script> !</p>
-
-
 // redirection avec header
 header("location: index.php"); 
 
@@ -582,12 +570,103 @@ $mdp_hache= password_hash($mdp,PASSWORD_DEFAULT);
 // revoie true si les mdp sont egaux
 $isPasswordCorrect= password_verify($mdp, $mdp_hache )
 
+
+/////////////////
+//     test    //  
+/////////////////
+
+// entre dans pseudo:
+' OR 1=1 --     '// on a la tab qui s affiche sans regader le mdp 
+
+// si on connai le nom de la bd ex: mdp , dans pseudo:
+' UNION SELECT * FROM mdp --      '// il faut que le meme nb de colone que dans le echo
+// si pas meme nb col: 
+' UNION SELECT date,user,NULL,NULL FROM mdp --      '// si notre echo a 4 col
+
+// si connait pas le nom de la bd , dans pseudo:
+' UNION SELECT * FROM toto --       '// on vas avoir une erreur: ...Table 'injection.toto' 
+// on sait que la bd est injection ; on veut recuperer les nom des tables
+' UNION SELECT table_name ,NULL,NULL,NULL FROM information_schema.tables WHERE table_schema='injection' --      '//
+// on veut les colone de la table 
+' UNION SELECT COLUMN_NAME ,NULL,NULL,NULL FROM information_schema.columns WHERE table_name='nom_de_la_table' --        '//
+
+// echaper tout les '
+$login=str_replace(" ' ","\' ",$_POST['login']);
+// ne fonctione pas car si on fait: "a\' AND password =" est une chaine de char
+"SELECT * FROM users WHERE login = 'a\' AND password = ' or 1=1"
+
+
+/////////////////////
+//  contrer ataque //  
+/////////////////////
+
+// 1} dans getConnect() changer le mode d erreur en SILENT
+$connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT);
+
+// 2} modifier le fichier php.ini
+display _errors = off
+log_errors = on
+error_log = /dossier_log/log_erreur.txt
+// l admin vera les erreu dans: /dossier_log/log_erreur.txt
+
 // test sur le type de la var 
 is_numeric($id) // true si c est un nb
 ctype_digit($txt) // true si txt ne contien que des nb entier 
 
 //forcer un cast
 $id=intval($id);
+
+
+///////////////////////
+//  requete preparer //  
+///////////////////////
+
+// 1} met les valeur dans des var
+$login=$_POST['login'];
+$pass=$_POST['pass'];
+
+// 2} requete preparer avec des place holder=> :nom_var
+$requete="SELECT * FROM users WHERE login=:login AND mdp=:pass" ;
+
+// 3} utilise la methode prepare
+$prepare=$connexion->prepare($requete);
+
+// 4} lire les valeurs au place holder :nom_var en utilisant la méthode bindValue avec son type 
+// PDO::PARAM_STR : pour une chaîne de caractères ;
+// PDO::PARAM_INT : pour un INT
+// PDO::PARAM_NULL : pour NULL
+// PDO::PARAM_BOOL : pour un booléen ;
+// PDO::PARAM_LOB : pour le type 'objet large'
+
+// syntaxe bindValue
+$prepare->bindValue(':login', varPhp, parametre)
+
+$prepare->bindValue(':login', $login, PDO::PARAM_STR); // $login est une chaine de char
+$prepare->bindValue(':pass', $pass, PDO::PARAM_STR);
+
+// 5} execute la requete
+$prepare->execute();
+
+
+/////////////////
+//     XSS     //  
+/////////////////
+ 
+// faille XSS , dans un champs ou l on entre du texte, on rentre un code JS qui permet d acceder a des donner priver ou fait planter le site
+// htmlspecialchars => fait en sorte que l on recupere que des chars 
+<p> Bonjour : < ?php echo htmlspecialchars( $_POST['prenom'] ) ; ? ></p>
+
+// nl2br() permet de convertir les retour a la ligne en balise br html
+echo nl2br(htmlspecialchars($donnees['contenu']));
+
+// test dans les form si c est bloque
+<p> <script type="text/javascript">alert('C\'est pas bloquée')</script> !</p>
+// rendre la page invisible
+<style> body { display: none; } </style>
+
+// fonction php qui trasforme $variable en char html ex: < transformer en &lt;
+htmlentities($variable, ENT_QUOTES,"UTF-8");
+
 
 
 /*#############################*/
