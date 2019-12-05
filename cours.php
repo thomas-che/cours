@@ -393,7 +393,13 @@ setcookie('pseudo', 'M@teo21', time() + 365*24*3600, null, null, false, true);
 
 
 
-//===========================================================
+/*#############################*/
+/*                             */
+/*                             */
+/*          FICHIER            */ 
+/*                             */
+/*                             */
+/*#############################*/
 
 // on ouvre le fichier et on le stocke dans une var
 $monfichier = fopen('compteur.txt', 'r+');
@@ -416,6 +422,12 @@ fputs($monfichier, 'Texte à écrire');
 // remetre le curseur au debut du fichier
 fseek($monfichier, 0); 
 // j ai  impresion que l on ecrase l ancienne donner
+
+// fichier CSV
+$handle = fopen('tpA_note_clean.csv','r');
+// fgetcsv($nom_fic_ouver,logeur a lire,separateur,char de vide)
+while ( ($data = fgetcsv($handle,1000,';','"') ) !== FALSE ) {
+
 
 
 /*#############################*/
