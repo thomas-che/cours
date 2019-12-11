@@ -130,6 +130,7 @@ $chaineMajuscule = strtoupper($chaine);
 // recupere le nb du jours en cours
 $jour = date('d'); // 'Y' ; 'm' ; 'd' ; 'H' = heure ; 'i' = minute
 $date = date('Y-m-d') //2019-11-21
+$datetime= date('d/m/Y h:i:s');
 
 // cree function
 function direBj ($nom)
@@ -382,6 +383,13 @@ if (strlen(session_id()) < 1) session_start();  // 0 si pas de session start
 
 
 // cookie ecrit avant le code html
+// qaund initalise le cookie 
+if (!empty($_POST['birthday']) ){
+    setcookie('birthday',$_POST['birthday'],time()+60);
+    // sinon le cookie sera utile que au prochain chargement de la page
+    $_COOKIE['birthday']=$_POST['birthday'];
+}
+
 // 1 cookie = 1 info ; cookie a une durer de vie, time()=temps ecouler depuis le 01/01/1970
 setcookie('pseudo', 'M@teo21', time() + 365*24*3600 , chemin , domaine set , secure);
 // chemin : destination où le nav doit envoyer le cookie
@@ -390,6 +398,20 @@ setcookie('pseudo', 'M@teo21', time() + 365*24*3600 , chemin , domaine set , sec
 
 // cookie httpOnly pour eviter a faille XSS
 setcookie('pseudo', 'M@teo21', time() + 365*24*3600, null, null, false, true);
+
+
+// suprimer un cookie definitivement : unset puis reset le cookie avec temps dans le passer
+unset($_COOKIE['utilisateur']);
+setcookie('utilisateur','',time()-10);
+
+// si ne met pas de temps alors ceal revient a faire comme une session
+setcookie('utilisateur','thom');
+
+// stocker un tableau dans un cookie ; trasfomer le tableau en cahaine de char avec serialize
+$user=['prenom'=>'thomas','nom'=>'MICH','age'=>10];
+setcookie('utilisateur', serialize($user));
+// recuperer le cookie , le deserialize ducoup on a le tableau initial
+$user=unserialize($_COOKIE['utilisateur']);
 
 
 
