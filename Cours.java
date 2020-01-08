@@ -479,6 +479,257 @@ try {
 } // recupere l exeption      
 
 
+/*#############################*/
+/*                             */
+/*                             */
+/*        GENERICITER          */
+/*                             */
+/*                             */
+/*#############################*/
+
+public class Solo<T> {
+  private T valeur; //Variable d'instance
+
+  public Solo(){ //Constructeur par défaut
+    this.valeur = null;
+  }
+  public Solo(T val){ //Constructeur avec paramètre inconnu pour l'instant
+    this.valeur = val;
+  }
+  public void setValeur(T val){ //Définit la valeur avec le paramètre
+    this.valeur = val;
+  }
+  public T getValeur(){ //Retourne la valeur déjà « castée » par la signature de la méthode !
+    return this.valeur;
+  }       
+}
+
+// example creation class
+Solo<Integer> val = new Solo<Integer>();
+Solo<String> valS = new Solo<String>("TOTOTOTO");
+Solo<Float> valF = new Solo<Float>(12.2f);
+Solo<Double> valD = new Solo<Double>(12.202568);  
+// type primitif utiliser pr classe envelope (classe wrapper)
+
+// autoboking transforme type primitif en classe wrapper
+double d = new Double(12.2586);  //<=> double d = 12.2586
+Double d = 12.0;
+
+//genericiter sur 2 param
+public class Duo<T, S> {        
+  public Duo(T val1, S val2){ //Constructeur avec paramètres
+    this.valeur1 = val1;
+    this.valeur2 = val2;
+  }
+// comme pr 1 param       
+}
+// creeation 
+Duo<String, Boolean> dual = new Duo<String, Boolean>("toto", true);
+
+
+// genericiter et collection
+List<String> listeString= new ArrayList<String>();
+List<Float> listeFloat = new ArrayList<Float>();
+
+
+/*#############################*/
+/*                             */
+/*  heritage et genericiter    */
+/*                             */
+/*#############################*/
+
+// wildcard = ? ; on peut utiliser n impote quel type d objet
+ArrayList<?> list;
+
+//List n'acceptant que des instances de Voiture ou de ses sous-classes
+List<? extends Voiture> listVoitureSP = new ArrayList<VoitureSansPermis>();  
+// /!\ bloquer lecture seule
+
+//'? extends MaClasse' autorise toutes les collections de classes ayant pour supertype MaClasse
+//Avec cette méthode, on accepte aussi bien les collections de Voiture que les collection de VoitureSansPermis
+static void affiche(List<? extends Voiture> list){
+  for(Voiture v : list)
+    System.out.print(v.toString());
+}
+
+//'? super MaClasse' autorise toutes les collections de classes ayant pour type MaClasse et tous ses supertypes
+//Avec cette méthode, on accepte aussi bien les collections de Voiture que les collections d'Object : superclasse de toutes les classes
+static void affiche(List<? super Voiture> list){
+  for(Object v : list)
+    System.out.print(v.toString());
+}
+
+
+/*#############################*/
+/*                             */
+/*       classe anonyme        */
+/*   interface fonctionnelle   */
+/*          lambda             */
+/*    reference de methode     */
+/*                             */
+/*#############################*/
+
+// classe anonyme 
+pers.setSoin(new Operation());
+//Utilisation d'une classe anonyme
+pers.setSoin(new Soin() {
+    public void soigne() {
+        System.out.println("Je soigne avec une classe anonyme ! ");
+    }       
+  }
+);
+
+
+// interface fonctionnelle
+@FunctionalInterface // doit declarer
+public interface Soin {
+    public void soigne();
+// methode default dans inteface fonctionnelle
+    public default String toto(int i){
+        return "ok";
+    };
+}
+
+
+// lambda 
+// () -> faire une action;
+// (param1, param2) -> faire une action;
+// (param1, param2, param3) -> {traitements ; retourne une valeur;} ;
+(a, b) -> {System.out.println("coucou"); return a + b;};
+
+
+// EX:
+
+// interface fonctionnelle
+@FunctionalInterface
+public interface Dialoguer {
+    public void parler(String question);
+}
+
+// classe anonyme 
+Dialoguer d = new Dialoguer() {
+    public void parler(String question) {
+        System.out.println("Tu as dis : " + question);  
+    }
+};
+d.parler("Bonjour");
+
+// lambda 
+Dialoguer d = (s) -> System.out.println("Tu as dis : " + s);
+d.parler("Bonjour");
+
+
+/*#############################*/
+/*                             */
+/*                             */
+/*         COLLECTION          */
+/*                             */
+/*                             */
+/*#############################*/
+
+
+////////////////
+//    LIST    //
+////////////////
+
+// collection>list ; stocker valeur sans conditions pr stocker, accept toute les valeur meme null
+// tableau extensible a vonlonter, recuprer element via indice ; ex: Vector, LinkedList, ArrayList
+
+
+// LinkedList = liste chainee ; utile si beaucoup insert delete dans la list ; tres volumineux
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
+// 1er [null,element,element suivant] ; [element precedent,element,element suivant] ; ...
+
+List l = new LinkedList();
+l.add(12);
+
+// parcourir la liste avec l interface Iterator qui est implementer
+ListIterator li = l.listIterator();
+while(li.hasNext())
+    System.out.println(li.next());
+
+
+// ArrayList ; pas limite taille, tout object meme null, rapide en lecture, lente pr insert et delete
+import java.util.ArrayList;
+
+ArrayList al = new ArrayList();
+al.add(12);
+
+// methode fornie par arraylist
+add() //permet d'ajouter un élément ;
+get(int index) //retourne l'élément à l'indice demandé ;
+remove(int index) //efface l'entrée à l'indice demandé ;
+isEmpty() //renvoie « vrai » si l'objet est vide ;
+removeAll() //efface tout le contenu de l'objet ;
+contains(Object element) //retourne « vrai » si l'élément passé en paramètre est dans l'ArrayList.
+
+
+////////////////
+//    SET     //
+////////////////
+
+// collection>set ; pas de doublon , null mais que 1 fois , pr beacoup de donnee
+// ex objet de set : HashSet, TreeSet, LinkedHashSet , sortedSet pr stoker selon un ordre 
+
+
+// HashSet ; le plus perfomant en temps d acces , utilise un iterator
+import java.util.HashSet;
+import java.util.Iterator;
+
+HashSet hs = new HashSet();
+hs.add("toto");
+
+// extraire un tableau d objet
+Object[] obj = hs.toArray();
+// parcout de ce tableau
+for(Object o : obj)
+    System.out.println(o);
+
+// methode fornie par HashSet
+add() //ajoute un élément ;
+contains(Object value) //retourne « vrai » si l'objet contient value ;
+isEmpty() //retourne « vrai » si l'objet est vide ;
+iterator() //renvoie un objet de type Iterator ;
+remove(Object o) //retire l'objet o de la collection ;
+toArray() //retourne un tableau d'Object.
+
+
+////////////////
+//    MAP     //
+////////////////
+
+import java.util.Enumeration;
+import java.util.Hashtable;
+// map> ; cle-valeur ; objet de type Hashtable, HashMap, TreeMap, WeakHashMap ; pb taille des donner a stoker
+
+
+// Hashtable = table de hachage ; pas de valeur = null ; est Thread Safe
+// parcourt cet objet grâce aux clés qu'il contient en recourant à la classe Enumeration
+
+Hashtable ht = new Hashtable();
+ht.put(1, "printemps");
+
+// parcourir hashtable
+Enumeration e = ht.elements();
+while(e.hasMoreElements())
+    System.out.println(e.nextElement());
+
+// methode fornie par hashtable
+isEmpty() //retourne « vrai » si l'objet est vide ;
+contains(Object value) //retourne « vrai » si la valeur est présente. Identique à containsValue(Object value) ;
+containsKey(Object key) //retourne « vrai » si la clé passée en paramètre est présente dans la Hashtable ;
+put(Object key, Object value) //ajoute le couple key - value dans l'objet ;
+elements() //retourne une énumération des éléments de l'objet ;
+keys() //retourne la liste des clés sous forme d'énumération.
+
+
+// HashMap ; varie peux de Hashtable sauf: accept valeur null ; n est pas Thread Safe
+
+
+
+
 
 /*#############################*/
 /*                             */
