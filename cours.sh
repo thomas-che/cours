@@ -15,9 +15,6 @@ history
 # recherche text dans resultat avant le pipe=( | )
 ll | grep text		# ex: ll | grep opt	-> montre que fichier opt
 
-# le -n permet d avoir les num de ligne
-grep -n "^debut" fichier1.txt
-
 # liste procecus consomation en direct
 top	
 
@@ -136,6 +133,7 @@ find /home/thomas/Documents/tp_l2_info/outil_dev/atelier/ | cut -f8- -d'/' | xar
 # selectioner des ligne sur un fichier txt
 fichier.txt | head -n 30  # garde les 30 premiere ligne de fichier.txt
 fichier.txt | tail -n 30  # garde les 30 derniere ligne de fichier.txt
+fichier.txt | tail -n +3  # garde les 3 premiere ligne de fichier.txt
 
 # calculatrice du shell
 "2+3*4" | bc 
@@ -170,6 +168,23 @@ file fichier1.txt
 
 # affiche le coadage du fichier
 hexdump -C fichier1.txt | head
+
+# le -n permet d avoir les num de ligne
+grep -n "^debut" fichier1.txt
+grep -c "data" f1.txt #compte le nb fois data dans f1
+grep -o "a" f1.txt #affiche que les "a" dans f1 ; sans le -o on affiche tout les mot avec des "a"
+grep "^.[^ ]*$" f1.txt #nimporte quoi sauf espace
+
+# egrep permet de faire des ou
+egrep -n "^(Acte|Scene|Rideau)" f.txt # cherche Acte ou Scene ou Rideau
+
+# sed pour remplace qqch dans un fichier
+sed -e "s/NUMBER/INTEGER/g" f1.txt # s=substitution ; g= pr le faire plusieur fois dans la meme ligne 
+sed -n "s/AAA/ZZZ/gp" f1.txt # -n pour afiche que ce que l on a modifier; p= afficher les mot que l on a modifier ex: AAAzerty => ZZZzerty
+sed "abc/d" f1.txt # d= suprimer abc dans f1
+
+# pour sauvgarder les modif 
+cat f1.txt | sed -e "s/NUMBER/INTEGER/g" > f1_modif.txt 
 
 
 ###############################
@@ -300,6 +315,52 @@ while read q p; do
 	som=$(echo "$som+$q*$p" | bc )
 done <RP.txt
 
+# savoir le mot qui se repete le plus dans un fichier : doublon
+cat f.txt | sort | uniq -c | sort -nr | head -n 1
+
+# coordoner en commun ? coo1= $1
+cat coo1 | sort >coo1Trier
+cat coo2 | sort >coo2Trier
+join coo1Trier coo2Trier
+
+# calc d un prix=quantiter*prix_uniter
+som=0
+#on lit RP et on prend pr chaque ligne le 1er mot et soquer dans q , 2eme mot dans p
+while read q p; do
+	som=$(echo "$som+$q*$p" | bc )
+done <RP # ou RP est un fichier de type: 12 3.04
+#										 8 14     ...
+
+# recupere text iteresant
+fic=$1
+debut=$(grep -n "^** STRAT OF" $fic | cut -d':' -f 1)
+fin=$(grep -n "^** END OF" $fic | cut -d':' -f 1)
+head -n $(($fin-1)) $fic | tail -n $(($debut+1)) > fic_clear.txt
+cat fic_clear.txt | tr -d '\r' > fic_clear.txt 
+cat fic_clear.txt
+
+# recupere les 5 personne qui ont le plus de replique
+grep "^[A-Z][A-Z ]*(.*):$" cyrano.txt | cut -d'(' -f1 >tmp/avec
+grep "^[A-Z][A-Z ]*:$" cyrano.txt | tr -s ':' ' ' >tmp/sans
+(cat tmp/avec ; cat tmp/sans ) >tmp/global
+cat tmp/global | sort | uniq -c | sort -nr | head -n5
+
+# ecrir chaque phrase du fichier a l envert
+if [ $# -eq 1 ] ; then # savoir si lit en enter standard ou en argument $1
+	nomfic=$1
+else
+	read nomfic # lit en enter standard
+fi
+while read ligne ; do
+	nbm=$(echo $ligne | wc -w )
+	phrase=''
+	for i in $(seq $nbm -1 1) ; do
+		mot=$(echo $ligne | cut -d' ' -f$i)
+		phrase="$phrase $mot"
+	done
+	echo $phrase
+done< $monfic
+
 
 ###############################
 #                             #
@@ -313,38 +374,23 @@ done <RP.txt
 http://192.168.46.176/svn/o2180812/
 login: o21...
 mdp: nne...
-
 # initialiser le svn
 svn checkout https://pdicost.univ-orleans.fr/svn/o2180812/ projet1 --username=o2180812
-
 svn status
-
 # ajout 
 svn add *
-
 # commit
 svn commit -m'msg'
-
 #
 svn log
 #
 svn log -v
-
 # affiche le 2eme commit
 svn log -r 2
-
 # affiche des ifon a propos du svn
 svn info
-
 # affiche la diff avec l ancien commit
 svn diff -r 1
-
 # syncroniser le rep =~ pull
 svn update
-
 # si conflict suivre les indication
-
-
-
-
-

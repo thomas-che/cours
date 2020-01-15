@@ -728,7 +728,143 @@ keys() //retourne la liste des clés sous forme d'énumération.
 // HashMap ; varie peux de Hashtable sauf: accept valeur null ; n est pas Thread Safe
 
 
+/*#####################################################################################*/
+/*                                                                                     */
+/*                                                                                     */
+/*          EXAMPLE : project Java gestion seance                                      */
+/*                                                                                     */
+/*                                                                                     */
+/*#####################################################################################*/
 
+// ajouter un comparateur interne
+public class Spectacle {
+    protected Set<Seance> lesSeances;
+    public Spectacle (String titre){
+        interprete = new TreeSet<>();
+        lesSeances = new TreeSet<Seance>(new Comparator<Seance>() {
+            @Override
+            public int compare(Seance s1, Seance s2) {
+                Creneau s1Creneau = s1.getCreneau();
+                Creneau s2Creneau = s2.getCreneau();
+                return s1Creneau.compareTo(s2Creneau);
+            }
+        });
+    }
+}
+// redefini compareTo dans Seance
+public class Seance implements Comparable<Seance> {
+  @Override
+  public int compareTo(Seance seance) {
+      return this.getCreneau().compareTo(seance.getCreneau());
+  }
+}
+// ducoup redefini compareTo dans Creneau
+public class Creneau implements Comparable<Creneau> {
+  @Override
+  public int compareTo(Creneau creneau) {
+      if (this.equals(creneau)){
+          return 0;
+      }
+      else if (this.getNumJour() < creneau.getNumJour()){ //this avant creneau
+          return -1;
+      }
+      else {
+          return this.getHoraireDebut().compareTo(creneau.getHoraireDebut());
+      }
+  }
+}
+// ducoup redefini compareTo dans Horaire
+public class Horaire implements Comparable<Horaire>{
+  @Override
+  public int compareTo(Horaire horaire) {
+      int h = horaire.getHeures();
+      int m = horaire.getMinutes();
+      if (this.equals(horaire)){
+          return 0;
+      }
+      else {
+          if (this.heures == h){
+              if (this.minutes < m){
+                  return -1; //this plus petit que horaire
+              }
+              else return 1;
+          }
+          if (this.heures < h){
+              return -1; //this plus petit que horaire
+          }
+          else {
+              return 1; // this plus grand que horaire
+          }
+      }
+  }
+}
+
+// utilisation d un TreeMap avec son iterator
+public class GestionProgrammationSemaine implements IProgrammationSemaine {
+  private SortedMap<Integer,Salle> lesSalle;
+  public GestionProgrammationSemaine (){
+      lesSalle = new TreeMap<>();
+      Salle s1 = new Salle("salle 1",100, 12.43);
+      lesSalle.put(s1.getNum(),s1);
+  }
+// exemple iterateur sur un TreeMap
+  public String lesSallesFilm() {
+    String listSalleF="";
+    Set lesSalleF = lesSalle.keySet();
+    Iterator<Integer> it = lesSalleF.iterator();
+    while (it.hasNext()){
+        Integer numSalleF = it.next();
+        Salle salleF = lesSalle.get(numSalleF);
+        listSalleF+=salleF.affichierSalle();
+    }
+    return listSalleF;
+  }
+}
+
+// iterer sur un ensemble dans un sortedMap -> for...
+public class Salle {
+  private SortedMap<Integer, Set<Creneau> > lesCreneauxOccupes;
+  public Salle () {
+    this.lesCreneauxOccupes=new TreeMap< Integer, Set<Creneau>>();
+  }
+  public boolean estDisponible (Creneau c){
+    if (lesCreneauxOccupes.containsKey(c.getNumJour())) {
+      Horaire cHeureDeb = c.getHoraireDebut();
+      Horaire cHeureFin = c.getHoraireFin();
+
+      Set<Creneau> lesCreneau = lesCreneauxOccupes.get(c.getNumJour());
+      Horaire heureFinAncienCreneau = new Horaire(0, 0); // instancie & heure de la journer 00:00
+      boolean estDisponible = false;
+      for (Creneau unCreneau: lesCreneau){
+        // ...
+      }
+    }
+  }
+}
+
+// ajouter un creneau : recupere l ensemble des creneaux puis ajoute le new creneau et remplace dans lesCreneauOcuper
+public boolean ajouterCreneau (Creneau c){
+  if (lesCreneauxOccupes.containsKey(c.getNumJour())) {
+    if ( estDisponible(c)){ //test si la salle est dispo
+      Set ensembleCreneau = lesCreneauxOccupes.get(c.getNumJour());
+      Set ancienEnsembleCreneau=ensembleCreneau;
+      ensembleCreneau.add(c);
+      return lesCreneauxOccupes.replace(c.getNumJour(),ancienEnsembleCreneau,ensembleCreneau);
+    }
+    else {
+      return false;
+    }
+  }
+  else { // aucun creneau a ce jour
+    Set<Creneau> newEnsembleCreneau = new TreeSet<>() ;
+    newEnsembleCreneau.add(c);
+    lesCreneauxOccupes.put(c.getNumJour(),newEnsembleCreneau);
+    return true;
+  }
+}
+/*#####################################################################################*/
+/*     FIN EXAMPLE                                                                     */
+/*#####################################################################################*/
 
 
 /*#############################*/
