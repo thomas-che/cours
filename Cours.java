@@ -931,5 +931,194 @@ public boolean ajouterCreneau (Creneau c){
 }
 
 
+/*#############################*/
+/*                             */
+/*                             */
+/*          FICHIER            */
+/*                             */
+/*                             */
+/*#############################*/
+
+//Package à importer afin d'utiliser l'objet File
+import java.io.File;
+
+//Création de l'objet File
+File f = new File("test.txt");
+
+f.getAbsolutePath(); // Chemin absolu du fichier 
+f.getName(); // Nom du fichier
+f.exists(); // Est-ce qu'il existe ? 
+f.isDirectory(); // Est-ce un répertoire ?
+f.isFile(); // Est-ce un fichier ?
+f.listRoots(); // pr avoir liste des lecteur a la racine
+
+// /!\ tres peux utile car utilise les byte pr se deplacer /!\
+import java.io.FileInputStream; // lecture
+import java.io.FileOutputStream; // ecriture
+
+// copier un fichier txt :
+// Nous déclarons nos objets en dehors du bloc try/catch
+FileInputStream fis = null;
+FileOutputStream fos = null;
+try {
+  // On instancie nos objets 
+  fis = new FileInputStream(new File("test.txt"));   // fis va lire le fichier
+  fos = new FileOutputStream(new File("test2.txt"));   // fos va écrire dans le nouveau fichier si il n existe pas il sera cree
+  while (fis.read(x) ) { // x est un parametre de lecture
+    // On écrit dans notre deuxième fichier avec l'objet adéquat
+    fos.write(x);
+  }
+} catch (FileNotFoundException e) {
+  // Cette exception est levée si l'objet FileInputStream ne trouve aucun fichier
+  e.printStackTrace();
+} catch (IOException e) {
+  // Celle-ci se produit lors d'une erreur d'écriture ou de lecture
+  e.printStackTrace();
+}
+// On ferme nos flux de données dans un bloc finally pour s'assurer que ces instructions seront exécutées dans tous les cas même si une exception est levée !
+try {
+  if (fis != null)
+    fis.close();
+} catch (IOException e) {
+  e.printStackTrace();
+}
+
+// /!\ pas fini le cours opr /!\
+
+/*#############################*/
+/*                             */
+/*                             */
+/*         IHM ; GUI           */
+/*                             */
+/*                             */
+/*#############################*/
+// IHM = Interfaces Homme Machine ; GUI = Graphical User Interfaces
+
+import javax.swing.*;
+javax.swing // LightWeight ; nous travaillerons uniquement avec des composants swing
+java.awt // HeavyWeight ; Nous n'utiliserons pas de composants awt; en revanche, des objets issus du package awt seront utilisés afin d'interagir et de communiquer avec les composant swing
+
+
+// instancier un obj de type JFrame
+JFrame fenetre = new JFrame();
+
+//Définit un titre pour notre fenêtre
+fenetre.setTitle("titre de la fenetre");
+//Définit sa taille : 400 pixels de large et 100 pixels de haut
+fenetre.setSize(400, 100);
+//Nous demandons maintenant à notre objet de se positionner au centre
+fenetre.setLocationRelativeTo(null);
+//Termine le processus lorsqu'on clique sur la croix rouge
+fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+// rendre visible la fenetre
+fenetre.setVisible(true);
+
+// pr placer la fenetre ; O en haut a gauche
+fenetre.setLocation(int x, int y);
+// redimetioner la fenetre ; false empeche de redimentioner
+fenetre.setResizable(boolean b);
+// garder au premier plan ; true garde au premier plan
+fenetre.setAlwaysOnTop(boolean b);
+
+// Composition d une fenetre du plus profond vers nous : https://user.oc-static.com/files/396001_397000/396288.png
+// le RootPane(en vert), le conteneur principal qui contient les autres composants ;
+// le LayeredPane(en violet), qui forme juste un panneau composé du conteneur global et de la barre de menu (MenuBar) ;
+// la MenuBar(en orange), la barre de menu, quand il y en a une ;
+// le content pane (en rose) : c'est dans celui-ci que nous placerons nos composants ;
+// le GlassPane(en transparence), couche utilisée pour intercepter les actions de l'utilisateur avant qu'elles ne parviennent aux composants.
+
+
+// utilisation de JPanel
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+//Instanciation d'un objet JPanel au meme endroit que instancie la fenetre
+JPanel pan = new JPanel();
+//Définition de sa couleur de fond
+pan.setBackground(Color.ORANGE);
+//On prévient notre JFrame que notre JPanel sera son content pane
+this.setContentPane(pan);
+// ou
+this.setContentPane(new Panneau());
+
+import java.awt.Graphics;
+public class Panneau extends JPanel { 
+  public void paintComponent(Graphics g){ // des que l on modifie la fenetre on appelle cette methode
+    // obj g avec fonction pr desiner qqch
+  }               
+}
+
+int largeurFenetre = this.getWidth(); 
+int hauteurFenetre = this.getHeight();
+
+// dessiner un rond plein : fillOval(coo x, coo y, largeur, hauteur)
+g.fillOval(20, 20, 75, 75);
+// dessiner le perimetrer un rond 
+g.drawOval(20, 20, 75, 75);
+
+//dessiner un rectangle ; x1, y1, width, height
+g.drawRect(10, 10, 50, 60);
+
+// dessiner un rectangle arrondi : x1, y1, width, height, arcWidth, arcHeight
+g.drawRoundRect(10, 10, 30, 50, 10, 10);
+
+// dessiner une ligne ; x1, y1, x2, y2
+g.drawLine(0, 0, this.getWidth(), this.getHeight()); // digonal
+
+// dessiner un polygone : drawPolygon(int[] x, int[] y, int nbrePoints);
+int x[] = {20, 30, 50, 60, 60, 50, 30, 20};
+int y[] = {30, 20, 20, 30, 50, 60, 60, 50};
+g.drawPolygon(x, y, 8);
+// dessine une ligne entre chaque pt
+g.drawPolyline(x, y, 8);
+
+// dessine du text : txt, coo x, coo y
+g.drawString(" mon txt ", 10, 20);
+
+// changer la couleur du text
+Font font = new Font("Courier", Font.BOLD, 20);
+g.setFont(font);
+g.setColor(Color.red);
+
+// afficher une image taille original
+Image img = ImageIO.read(new File("images.jpg"));
+g.drawImage(img, 0, 0, this);
+
+// afficher image qui s adapte a la taille de la fenetre
+g.drawImage(Image img, int x, int y, int width, int height, Observer obs)
+
+
+// Oject grafique 2D pr faire degrader
+// faire un cast de g et g2D
+Graphics2D g2d = (Graphics2D)g;
+// cree un nouveau degrader : true pr que degrader ce repete sur tote la fenetre
+// GradientPaint(coo x debut, coo y debut, primier color, coo x debut 2eme color, coo y debut 2eme color, Color.cyan, true);         
+GradientPaint gp = new GradientPaint(0, 0, Color.RED, 0, 50, Color.cyan, true);               
+g2d.setPaint(gp);
+g2d.fillRect(0, 0, this.getWidth(), this.getHeight());      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

@@ -1,0 +1,77 @@
+16/01/2020
+
+install pip :
+(module pour installer les extentions python)
+
+apt-get install python3-pip
+
+#====================================================================
+
+install jupyter :
+https://jupyter.org/install
+
+python3 -m pip install --upgrade pip
+python3 -m pip install jupyter
+jupyter notebook                           #executer jupyte
+
+#====================================================================
+
+install sage math :
+http://www.sagemath.org/download-linux.html
+
+sudo apt-get install sagemath
+
+#====================================================================
+
+install LAMP                      ====> systemctl start apache2  pour lancer appache
+https://doc.ubuntu-fr.org/lamp
+
+config appache2
+https://doc.ubuntu-fr.org/apache2
+1) systemctl disable apache2
+
+install mysql:
+https://doc.ubuntu-fr.org/mysql
+
+install phpmyadmin
+https://doc.ubuntu-fr.org/phpmyadmin
+
+cree super utilisateur : pseudo + mdp
+
+#====================================================================
+
+instaler Ocaml avec jupyter
+https://opam.ocaml.org/
+https://github.com/akabe/ocaml-jupyter
+
+sudo apt-get install ocaml
+
+sudo apt install opam
+sudo opam install jupyter
+opam install jupyter
+
+opam init
+sudo opam install lwt
+opam update
+sudo opam update
+
+sudo opam depext conf-cairo.1
+sudo opam install "cairo2<0.5"
+sudo opam reinstall archimedes
+sudo opam depext conf-zmq.0.1
+sudo opam install jupyter-archimedes
+sudo jupyter kernelspec install --name ocaml-jupyter "$(opam config var share)/jupyter"
+sudo opam switch
+eval `opam config env`
+
+jupyter notebook  ==> lancer jupyter
+
+
+#====================================================================
+
+install VirtualBox
+https://www.youtube.com/watch?v=xOqL9QlfAwI&list=PLz2wSPekIjiZgQhNqwlpmC1QqORRNGSfm&index=2&t=575s
+
+insatl depuis ubuntu app et apres suivre info video
+
+#====================================================================

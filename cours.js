@@ -282,7 +282,7 @@ newLink.appendChild(newLinkText);
 document.getElementById('myP').appendChild(newLink);
 
 
-// clone elemnt cree sans les enfant et sans atribut
+// clone element cree sans les enfant et sans atribut
 document.createElement('hr').cloneNode(false); 
 
 // clone element existant
@@ -308,10 +308,10 @@ document.body.appendChild(oldLink); // On réintègre ensuite l'élément suppri
 
 
 // savoir si il y a des enfnat
-.hasChildNodes()
+.hasChildNodes() // true si aumoins 1 enfant
 
 
-// inser elemnt avant un autre
+// inser element avant un autre
 var paragraph = document.querySelector('p');
 var emphasis = document.createElement('em'),
     emphasisText = document.createTextNode(' en emphase légère ');
