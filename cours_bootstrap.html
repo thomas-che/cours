@@ -1,26 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<html lang="fr">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
-  </head>
-  <body>
-    <h1>Hello, world!</h1>
+        <title>Hello, world!</title>
+    </head>
+    <body>
+        <h1>Hello, world!</h1>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-  </body>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    </body>
 </html>
 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <!-- ############################### -->
 <!-- #                             # -->
@@ -56,13 +59,15 @@
 <!--  |  .col-  |  .col-sm  |  .col-md  |  .col-lg  |   .col-xl  |  -->
 <!--  ------------------------------------------------------------  -->
 
+<!-- espace avant et apres la div container -->
 <div class="container">
-  <div class="row">
-    <div class="col-xl-2 col-md-4">test</div>
-  </div>
+      <div class="row">
+            <div class="col-xl-2 col-md-4">test</div>
+      </div>
 </div>
 
-
+<!-- pas d espace  -->
+<div class="container-fluid" >
 
 
 <!-- ############################### -->
@@ -76,13 +81,13 @@
 <!-- le plus propre -->
 <div class="form-group">
     <div class="input-group">
-      <div class="input-group-prepend">
-        <span class="input-group-text" ><i class="fas fa-user"></i></span>
-      </div>
-      <input type="text" class="form-control" placeholder="Username" >
+        <div class="input-group-prepend">
+            <span class="input-group-text" ><i class="fas fa-user"></i></span>
+        </div>
+        <input type="text" class="form-control" placeholder="Username" >
     </div>
 </div>
-<!-- +++ css : -->
+<!-- +++ CSS : -->
 .input-group-prepend .input-group-text{
   background-color: white;
 }
@@ -105,13 +110,75 @@
 </div>
 
 
+<!-- icon dans nous contacter -->
+<a href="#" class="fa fa-facebook"></a>
+<a href="#" class="fa fa-linkedin"></a>
+<!-- +++ CSS : -->
+.fa {
+    padding: 15px;
+    font-size: 25px;
+    color: #FFF;
+}
+.fa:hover{
+    color: #D5D5D5;
+    text-decoration: none;
+}
+
+<!-- ################################################### -->
+
+<!-- faire un menu avec droite avec un burger sur tel -->
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-main">
+                <span class="sr-only">toggle navigation</span> <!-- pr les lecteur du site pr non voyant -->
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button> <!-- pr faire menu burger -->
+            <a class="navbar-brand" href="#"><img src="img/w3newbie.png"></a> <!-- logo du site -->
+        </div> <!-- div pr menu burger -->
+        <div class="collapse navbar-collapse" id="navbar-collapse-main">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a class="active" href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#servises">Servises</a></li>
+                <li><a href="#">Testtimonials</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div><!-- les lien du menu -->
+    </div><!-- menu navigation -->
+</nav>
+<!-- +++ CSS : -->
+.navbar{
+    background-color: #23415C;
+    padding: 1% 0;
+    font-size: 1.2em;
+}
+.navbar-brand {  /*pr le logo*/
+    min-height: 55px;
+    padding: 0 15px 5px;
+}
+.navbar-default .navbar-nav li a {
+    color: #D5D5D5;
+}
+.navbar-default .navbar-nav li a:hover, .navbar-default .navbar-nav li a.active {
+    color: #FfF;
+}
 
 
-
-
-
-
-
+<!-- metre une image fixe en fond  -->
+<div id="home">
+</div>
+<!-- +++ CSS : -->
+#home {
+    background: url(img/mountains.jpeg) no-repeat center center fixed;
+    display: table;
+    height: 100%;  /* 60% pr faire une petite separation si pas d info dans */
+    width: 100%;
+    position: relative;
+    background-size: cover;
+}
 
 
 

@@ -777,6 +777,13 @@ function afficherErreur($erreur){
 }
 
 
+// include html file in variable php
+function display404error(){
+    $contents=file_get_contents('static/html/404error.html');
+    require_once('views/gabarit.php');
+}
+
+
 /////////////////
 //      4      //  controller/controller.php ; fait les control et appel de function
 /////////////////
@@ -827,5 +834,80 @@ catch(Exception $e) {
     $msg=$e->getMessage(); // recupere le msg de l Exception
     CtlErreur($msg);  // le msg sera afficher
 }
+
+
+
+/*##########################################################*/
+/*                                                          */
+/*                                                          */
+/*                           POO                            */
+/*                                                          */
+/*                                                          */
+/*##########################################################*/
+
+
+
+// cree class dans autre fichier : Personnage.php
+class Presonnage{
+    // proprieter
+    public $vie = 100;
+    public $nom;
+
+    // cree une methode = fonction
+    public function crier(){
+        echo 'AAAAAA';
+    }
+
+    // modifier atribut de l obj avec this
+    $this->vie=100;
+
+    // personnage attaque un autre
+    public function attaque($Pers){
+        $Pers->vie = $Pers->vie - $this->atk;
+        $Pers->vie -= $this->atk; // ou
+    }
+}
+
+// cree new objet 
+$toto = new Presonnage();
+
+// retourn la valeur de la var
+$toto->vie; // 100
+
+// attribuer la methode crier a l obj toto
+$toto->crier();
+
+// vidibiliter :
+public //$toto->nom = toto
+private //$toto->nom = ERROR
+protected // acces depuis des class qui en herite
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
