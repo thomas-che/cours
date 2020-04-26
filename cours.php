@@ -777,7 +777,7 @@ function afficherErreur($erreur){
 }
 
 
-// include html file in variable php
+// include html file in variable php ; html_in_php_var
 function display404error(){
     $contents=file_get_contents('static/html/404error.html');
     require_once('views/gabarit.php');
