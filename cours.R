@@ -246,12 +246,12 @@ t_fc_cum<-cumsum(t_nb_e/length(nb_e))
 # diagrame en escalier sur un vect de frequence cumuler
 plot(t_fc_cum,type="s")
 
-
 # courbe des frequences cumulee = fonction repartition empirique => ecdf(vecteur)
 c=ecdf(nb_e)
 plot(c)
 
-
+# importer in fichier .rda
+load("/home/thomas/.cache/.fr-2AJteU/robinet.rda")
 
 
 
