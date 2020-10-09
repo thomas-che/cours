@@ -1107,15 +1107,101 @@ g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
 
 
 
+/*#############################*/
+/*                             */
+/*                             */
+/*            RMI              */
+/*                             */
+/*                             */
+/*#############################*/
+
+//////////////////////
+//    interface     //  1} décrit l'interface et ses services
+//////////////////////
+public interface Hello extends Remote {
+    // interface Hello etend Remote et chaque methode releve RemoteException
+    String hello() throws RemoteException;
+}
 
 
+////////////////////////
+//    inmplemente     //  2} inmplemente l'interface et les methodes
+////////////////////////
+// implements Serializable pr transmetre des obj
+public class HelloImpl implements Hello, Serializable{
+    @Override
+    public String hello() throws RemoteException {
+        return "Hello world";
+    }
+}
 
 
+////////////////////
+//    Lanceur     //  3} le lanceur permet de publier le service
+////////////////////
+public class HelloLaunch {
+    public static void main(String[] args) {
+
+        // cree instance de hello
+        Hello h = new HelloImpl();
+        try{
+            // 1) Fabrique le STUB ; preparer la classe pr l appel distant ; avec caste de l'interface
+            Hello stub = (Hello)UnicastRemoteObject.exportObject(h,0);
+
+            // 2) se co a annuaire dans le localhost
+            Registry registry = LocateRegistry.getRegistry("localhost");
+
+            // 3) Publie le STUB ; publier service sous le nom : HelloService
+            registry.bind("HelloService",stub); // avec bind on s'inscrit dans le registre
+            System.out.println("HelloService publié....");
+
+// initialiser l annuaire : 
+//      1) lancer le lanceur 
+//      2) init rmiregistry dans ubuntu : metre le chemin complet vers le target/classes/ du projet
+//      commande line  FILE: rmiregistry -J-Djava.rmi.server.codebase=file:///<path_to_project>/target/classes///
+//      commande line  URL: rmiregistry -J-Djava.rmi.server.codebase=http://<url_serveur_distant>
+
+            // 4) attendre msg client
+            new Scanner(System.in).nextLine();
+            // 5) arreter proprement le service
+            System.out.println("FIN....");
+            registry.unbind("HelloService"); // cela depublie le services
+            System.exit(0); // fin du prog
+
+        } catch (RemoteException e){
+            e.printStackTrace(); // excption du Registry
+        } catch (AlreadyBoundException e) {
+            e.printStackTrace(); // excption du bind()
+        } catch (NotBoundException e) {
+            e.printStackTrace(); // excption de reg.unbind()
+        }
+    }
+}
 
 
+///////////////////
+//    Client     //  4} le client permet de acceder au service
+///////////////////
+public class Client {
+    public static void main(String[] args) {
+        try{
+            // on se connect a l'annuaire, hote = localhost
+            Registry registry = LocateRegistry.getRegistry("localhost");
 
+            // on cherche le service portant le nom : HelloService, on le caste en type de l'interface
+            Hello h = (Hello) registry.lookup("HelloService");
 
+            // affiche le resultat de l appel au server
+            String result = h.hello();
+            System.out.println(result);
 
+        } catch (RemoteException e){
+            e.printStackTrace(); // excption du Registry
+        } catch (NotBoundException e) {
+            e.printStackTrace(); //  excption reg.lookup
+        }
+    }
+}
 
 
 
