@@ -1115,6 +1115,20 @@ g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
 /*                             */
 /*#############################*/
 
+/* Architecture
+
+    -> src
+      -> main
+        -> java
+          -> client
+            - Client.java
+          -> interface
+            - Hello.java
+          -> server
+            - HelloImpl.java
+            - HelloLaunch.java
+*/
+
 //////////////////////
 //    interface     //  1} décrit l'interface et ses services
 //////////////////////
@@ -1205,6 +1219,132 @@ public class Client {
 
 
 
+/*#############################*/
+/*                             */
+/*                             */
+/*            JDBC              */
+/*                             */
+/*                             */
+/*#############################*/
 
+/* Architecture
+
+    -> src
+      -> main
+        -> java
+          -> client
+            - Client.java
+            - ConnexionBD.java
+          -> modele
+            - FacadeMessagerieImpl.java
+*/
+
+
+////////////////////////
+//    ConnexionBD     //  1} cree une connecxion unique static 
+////////////////////////
+
+public class ConnexionBD {
+
+    private static Connection connecxion=null; // on l'initialise a null
+    /**
+     * Si premier fois que appele cette methode alors cree la co avec DriverManager.getConnection
+     * Sinon retun juste la co
+     * @return la connecxion de la bdd
+     */
+    public static Connection getConnecxion(){
+        if(connecxion == null){
+            try {
+                connecxion = DriverManager.getConnection("jdbc:mysql://dbhost:3306/bd_o2180812","o2180812","thomas");
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return connecxion;
+    }
+
+    public ConnexionBD() {
+        getConnecxion();
+    }
+}
+
+
+///////////////////
+//    xxImpl     //  2} Dans le fic Impl on ecrit les requettes 
+///////////////////
+
+// tj dans un block try/catch
+try {
+
+    // Select
+    Statement s = ConnexionBD.getConnecxion().createStatement(); // recuprer la co
+    ResultSet rs =s.executeQuery("SELECT * FROM utilisateurs WHERE nom=\""+pseudo+"\";");
+    if (rs.next()) {
+        return new Utilisateur(rs.getString("nom"),rs.getString("mdp"));
+    }
+
+    // Insert en prepar
+    PreparedStatement prep_st =  ConnexionBD.getConnecxion().prepareStatement("INSERT INTO utilisateurs VALUES (?,?);");
+    prep_st.setString(1,nom);
+    prep_st.setString(2,mdp);
+    prep_st.executeUpdate();
+
+    // Delete
+    Statement s1 = ConnexionBD.getConnecxion().createStatement();
+    int nbr = s1.executeUpdate("DELETE FROM connecte WHERE nom=\""+nom+"\";");
+    System.out.println("user deco");
+    if(nbr==0){ // sa veux dire que il c'est rien passer dans le delete
+        throw new UtilisateurNonConnecteException();
+    }
+
+    // Traitement a rep x fois
+    prep_st = ConnexionBD.getConnecxion().prepareStatement("SELECTE * FROM message WHERE id_d=?;");
+    prep_st.setInt(1,id_d);
+    ResultSet rs = prep_st.executeQuery();
+    while (rs.next()){
+        /*Utilisateur user = getUtilisateurParNom(rs.getString("user"));*/ // on cree 50 fois le meme user....
+        String envoyer_str = rs.getString("envoyer");
+        String msg = rs.getString("msg");
+        Utilisateur envoyer = envoyer_str.equals(u1.getNom()) ? u1 : u2; // eviter d avoir 50 fois le meme utilisateur
+        Message m = new Message(envoyer,rs.getString("msg"));
+        d.ajouterMessage(m);
+    }
+
+} catch (SQLException throwables) {
+    throwables.printStackTrace();
+}
+
+
+
+
+
+
+
+
+
+///////////////////
+//    Client     //  3} le client utilise la facade
+///////////////////
+
+public class Client {
+    public static void main(String[] args) throws <...> {
+        FacadeMessagerieImpl facade = new FacadeMessagerieImpl();
+
+        facade.connexion("thomas","thomas");
+        System.out.println(facade.lesConnecte());
+
+        /*
+                pr recuperer la clef=id gener en auto increment
+         */
+        /*try {
+            Statement st = ConnexionBD.getConnecxion().createStatement();
+            st.executeUpdate("INSERt INTO test(valeur) VALUES(1);",Statement.RETURN_GENERATED_KEYS); // recuperer l'auto increment
+            ResultSet rt = st.getGeneratedKeys(); // return l'auto increment cree
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }*/
+
+    }
+}
 
 
