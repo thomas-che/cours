@@ -1103,8 +1103,73 @@ g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
 
 
 
+/*#############################*/
+/*                             */
+/*                             */
+/*            MAVEN            */
+/*                             */
+/*                             */
+/*#############################*/
 
+// forcer la source en JDK version 11
+<properties>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+</properties>
 
+// Dependence pr JDBC mysql
+<dependencies>
+    //<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+    <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>5.1.48</version>
+    </dependency>
+    <dependency>
+        <groupId>fr.miage.orleans.pa</groupId>
+        <artifactId>sujet4</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <scope>compile</scope>
+    </dependency>
+    <dependency>
+        <groupId>fr.miage.orleans.pa</groupId>
+        <artifactId>sujet4</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <scope>compile</scope>
+    </dependency>
+</dependencies>
+
+// Dependence Serialization xml quand java > 11
+<dependencies>
+    <dependency>
+        <groupId>javax.activation</groupId>
+        <artifactId>activation</artifactId>
+        <version>1.1.1</version>
+    </dependency>
+    <dependency>
+        <groupId>javax.xml.bind</groupId>
+        <artifactId>jaxb-api</artifactId>
+        <version>2.2.11</version>
+    </dependency>
+    <dependency>
+        <groupId>com.sun.xml.bind</groupId>
+        <artifactId>jaxb-core</artifactId>
+        <version>2.2.11</version>
+    </dependency>
+    <dependency>
+        <groupId>com.sun.xml.bind</groupId>
+        <artifactId>jaxb-impl</artifactId>
+        <version>2.2.11</version>
+    </dependency>
+</dependencies>
+
+// Dependence serialisation en Json
+//<!-- https://mvnrepository.com/artifact/org.eclipse.persistence/org.eclipse.persistence.moxy -->
+<dependency>
+    <groupId>org.eclipse.persistence</groupId>
+    <artifactId>org.eclipse.persistence.moxy</artifactId>
+    <version>2.7.7</version>
+</dependency>
 
 
 /*#############################*/
@@ -1222,9 +1287,9 @@ public class Client {
 /*#############################*/
 /*                             */
 /*                             */
-/*            JDBC              */
+/*            JDBC             */
 /*                             */
-/*                             */
+/*                             */  // Ne pas oublier les dependencies mysql maven 
 /*#############################*/
 
 /* Architecture
@@ -1245,7 +1310,6 @@ public class Client {
 ////////////////////////
 
 public class ConnexionBD {
-
     private static Connection connecxion=null; // on l'initialise a null
     /**
      * Si premier fois que appele cette methode alors cree la co avec DriverManager.getConnection
@@ -1262,7 +1326,6 @@ public class ConnexionBD {
         }
         return connecxion;
     }
-
     public ConnexionBD() {
         getConnecxion();
     }
@@ -1277,13 +1340,17 @@ public class ConnexionBD {
 try {
 
     // Select
+    // cree un obj Statement pr chaque requette
     Statement s = ConnexionBD.getConnecxion().createStatement(); // recuprer la co
+    // rs permet d'iterer sur les lignes retourner
     ResultSet rs =s.executeQuery("SELECT * FROM utilisateurs WHERE nom=\""+pseudo+"\";");
-    if (rs.next()) {
+    // rs est un obj de typage et nomage comme la bdd
+    if (rs.next()) { 
         return new Utilisateur(rs.getString("nom"),rs.getString("mdp"));
     }
+    s.close();
 
-    // Insert en prepar
+    // Insert avec requette preparer
     PreparedStatement prep_st =  ConnexionBD.getConnecxion().prepareStatement("INSERT INTO utilisateurs VALUES (?,?);");
     prep_st.setString(1,nom);
     prep_st.setString(2,mdp);
@@ -1297,28 +1364,34 @@ try {
         throw new UtilisateurNonConnecteException();
     }
 
-    // Traitement a rep x fois
-    prep_st = ConnexionBD.getConnecxion().prepareStatement("SELECTE * FROM message WHERE id_d=?;");
-    prep_st.setInt(1,id_d);
-    ResultSet rs = prep_st.executeQuery();
-    while (rs.next()){
-        /*Utilisateur user = getUtilisateurParNom(rs.getString("user"));*/ // on cree 50 fois le meme user....
-        String envoyer_str = rs.getString("envoyer");
-        String msg = rs.getString("msg");
-        Utilisateur envoyer = envoyer_str.equals(u1.getNom()) ? u1 : u2; // eviter d avoir 50 fois le meme utilisateur
-        Message m = new Message(envoyer,rs.getString("msg"));
-        d.ajouterMessage(m);
-    }
+    // pr recuperer la clef=id gener en auto increment
+    Statement st = ConnexionBD.getConnecxion().createStatement();
+    st.executeUpdate("INSERt INTO test(valeur) VALUES(1);",Statement.RETURN_GENERATED_KEYS); // recuperer l'auto increment
+    ResultSet rt = st.getGeneratedKeys(); // return l'auto increment cree
 
 } catch (SQLException throwables) {
     throwables.printStackTrace();
 }
 
-
-
-
-
-
+// example repetition d'un traitement 
+private void loadMessage(Discussion d, int id_d, Utilisateur u1, Utilisateur u2){
+    PreparedStatement prep_st = null;
+    try {
+        prep_st = ConnexionBD.getConnecxion().prepareStatement("SELECTE * FROM message WHERE id_d=?;");
+        prep_st.setInt(1,id_d);
+        ResultSet rs = prep_st.executeQuery();
+        while (rs.next()){
+            /*Utilisateur user = getUtilisateurParNom(rs.getString("user"));*/ // on cree 50 fois le meme user....
+            String envoyer_str = rs.getString("envoyer");
+            String msg = rs.getString("msg");
+            Utilisateur envoyer = envoyer_str.equals(u1.getNom()) ? u1 : u2; // eviter d avoir 50 fois le meme utilisateur
+            Message m = new Message(envoyer,rs.getString("msg"));
+            d.ajouterMessage(m);
+        }
+    } catch (SQLException throwables) {
+        throwables.printStackTrace();
+    }
+}
 
 
 
@@ -1330,21 +1403,221 @@ public class Client {
     public static void main(String[] args) throws <...> {
         FacadeMessagerieImpl facade = new FacadeMessagerieImpl();
 
-        facade.connexion("thomas","thomas");
+        facade.connexion("thomas","azerty");
         System.out.println(facade.lesConnecte());
-
-        /*
-                pr recuperer la clef=id gener en auto increment
-         */
-        /*try {
-            Statement st = ConnexionBD.getConnecxion().createStatement();
-            st.executeUpdate("INSERt INTO test(valeur) VALUES(1);",Statement.RETURN_GENERATED_KEYS); // recuperer l'auto increment
-            ResultSet rt = st.getGeneratedKeys(); // return l'auto increment cree
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }*/
-
     }
 }
+
+
+
+
+/*#############################*/
+/*                             */
+/*                             */
+/*        Serialization        */
+/*                             */
+/*                             */ 
+/*#############################*/
+
+/* Architecture
+
+    -> src
+      -> main
+        -> java
+          -> logs
+            - Client.java
+            - MaListe.java
+*/
+
+///////////////////
+//               //
+//     Log       //
+//               //
+///////////////////
+
+
+// cree le loger 1 seul fois :
+Logger logger = Logger.getLogger("logs");
+try {
+    // cree un handler trace.txt
+    Handler handler = new FileHandler("trace.txt");
+    // ajout de cet handler au logger
+    logger.addHandler(handler);
+
+    // changer le format du handler en mode classe anonyme
+    Formatter formateur = new Formatter(){
+        @Override
+        public String format(LogRecord logRecord) {
+            return (logRecord.getLevel()+" : "+logRecord.getMessage()+" \n");
+        }
+    };
+    // changer le formateur de notre handler
+    handler.setFormatter(formateur);
+} catch (IOException e) {
+    e.printStackTrace();
+}
+
+
+//logger de basse rustique
+Logger logger = Logger.getAnonymousLogger();
+// logger plus propre
+Logger logger = Logger.getLogger("");
+
+// changer le niveau du logger au plus fin
+logger.setLevel(Level.FINEST);
+logger.log(Level.INFO,"ajout de "+str); // ou logger.info("ajout de "+str);
+logger.severe("JE SUIS SEVERE");
+logger.finest("je suis tres souple");
+
+// on prend le logger definit dans le package = "logs"
+Logger logger = Logger.getLogger("logs");
+
+// Example utilisation du logger
+if( ... ){
+    logger.warning("nom trop log ! "+str);
+    throw new NomTropLongExecption();
+}
+
+
+///////////////////
+//    Client     //  On definir le loger une fois dans le main du Client.java
+///////////////////
+
+// defini le logger general pr le package logs
+Logger super_logger = Logger.getLogger("");
+// ici on peut changer le niv et juste une fois
+super_logger.setLevel(Level.WARNING);
+for (Handler h : super_logger.getHandlers()){
+    h.setLevel(Level.FINEST);
+}
+
+
+
+/////////////////////
+//                 //
+//  Serialization  //
+//                 //  Ne pas oublier les dependence xml si java>11
+/////////////////////
+
+// dit comment vas s'apler notre root xml
+@XmlRootElement(name="Essai")
+public class Essai implements Serializable {
+    private int id;
+    private transient String text; // quand champs pas utile, transient
+
+    // on force serialVersionUID avec l'ancienne version
+    //public static final long serialVersionUID=5792049873798025032L;
+    public static final long serialVersionUID=1L;
+}
+
+// Envoye un flux (dans le main methode static)
+public static void ecrire(Essai essai){
+    try {
+        // flux de bas niveau
+        FileOutputStream fos=new FileOutputStream("serial.bin");
+        // flus de plus haut niveaux
+        ObjectOutputStream oos=new ObjectOutputStream(fos);
+        oos.writeObject(essai); // ecrit l'objet 
+        oos.close();
+    }
+     catch (IOException exception) {
+        exception.printStackTrace();
+    }
+}
+
+// Lire flux dans un fichier serial.bin
+public static Essai lire(){
+    try {
+        FileInputStream fis=new FileInputStream("serial.bin");
+        ObjectInputStream ois=new ObjectInputStream(fis);
+        Essai es = (Essai)ois.readObject();
+        return es;
+    }
+     catch (...) {
+        e.printStackTrace();
+    }
+    return null;
+}
+
+
+// pr ne pas faire du xml par default
+System.setProperty("javax.xml.bind.context.factory","org.eclipse.persistence.jaxb.JAXBContextFactory");
+
+// cree un fichier essai.xml
+JAXBContext context = JAXBContext.newInstance(Essai.class); // intance de la class que on serializer en xml
+Marshaller marshaller = context.createMarshaller();
+marshaller.marshal(essai,new File("essai.xml"));
+
+// formater la sortie xml proprement avec indentation des balise
+marshaller.setProperty("jaxb.formatted.output",true);
+
+// extraire une donner d'un xml
+Unmarshaller unmarshaller = context.createUnmarshaller();
+Essai e2 = (Essai) unmarshaller.unmarshal(new File("essai.xml"));
+System.out.println(e2);
+
+//propriete pr dire en quel format on sort, ici json
+// pas oublier dependence serialisation en Json
+marshaller.setProperty(MarshallerProperties.MEDIA_TYPE,"application/json");
+marshaller.setProperty(MarshallerProperties.JSON_INCLUDE_ROOT,false);
+marshaller.marshal(essai,new File("essai.json"));
+
+/* Unmarshaller ne fonctionne pas chez moi avec le Json...
+unmarshaller.setProperty(MarshallerProperties.MEDIA_TYPE,"application/json");
+unmarshaller.setProperty(MarshallerProperties.JSON_INCLUDE_ROOT,false);
+Essai e3 = (Essai) unmarshaller.unmarshal(new File("essai.json"));
+System.out.println(e3);*/
+
+
+
+
+/*#############################*/
+/*                             */
+/*                             */
+/*           Thread            */
+/*                             */
+/*                             */  
+/*#############################*/
+
+// la classe doit implementer Runnable
+public class Chrono implements Runnable{
+    public void run() {
+        for (int i = 0; i<11; i++) {
+            System.out.println("seconde i ="+i);
+            try {
+                Thread.sleep(1000); // faire une pause de 1sec
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+// dans le main pr lancer le thread
+Chrono ch1 = new Chrono();
+Thread th1 = new Thread(ch1);
+th1.start();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
