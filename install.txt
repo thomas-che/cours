@@ -109,26 +109,39 @@ Install RStudio :
 Install netkit:
 	src : https://www.netkit.org/
 
-	1) dl les 3 fichier netkit
+	1) dl les 3 fichier netkit du prof car deja instll vdump
 	2) sudo apt-get install wireshark graphviz
-		demande non-superuser dorit : <non>
-	3) tar xvjSf Téléchargements/netkit-2.8z.tar.bz2
-	   tar xvjSf Téléchargements/netkit-filesystem-i386-F5.2.tar.bz2
-	   tar xvjSf Téléchargements/netkit-kernel-i386-K2.8.tar.bz2
+		demande superuser dorit : <OUI>
+		// changer la conf : sudo dpkg-reconfigure wireshark-common
+	3) Unzip les fichier du prof 	
+		tar xvjSf Téléchargements/netkit-2.8z.tar.bz2
+	   	tar xvjSf Téléchargements/netkit-filesystem-i386-F5.2.tar.bz2
+	   	tar xvjSf Téléchargements/netkit-kernel-i386-K2.8.tar.bz2
 	4) dans /home/thomas/.bashrc ajouter les 3 lignes
-	   export NETKIT_HOME=${HOME}/netkit
-	   export MANPATH=${NETKIT_HOME}/man:${MANPATH}
- 	   export PATH=${PATH}:${NETKIT_HOME}/bin
-	5)	 1179  2020-10-04 22:10:04 sudo apt-get install lib32z1 lib32ncurses5
-		 1180  2020-10-04 22:10:39 sudo dpkg --add-architecture i386
-		 1181  2020-10-04 22:10:51 sudo apt-get install xterm konsole make build-essential
-		 1182  2020-10-04 22:12:00 sudo apt-get install libc6:i386
-		 1183  2020-10-04 22:12:57 sudo apt-get install lib32z1 lib32ncurses5
-		 1184  2020-10-04 22:14:19 sudo apt-get install libdb1-compat tzdata
-		 1185  2020-10-04 22:14:33 sudo apt-get install tcpdump tshark -y
-		 1186  2020-10-04 22:14:45 sudo apt-get install wireshark graphviz
-		 1187  2020-10-04 22:14:55 sudo apt-get install lib32z1 lib32ncurses5
-		 1188  2020-10-04 22:15:03 sudo apt-get install net-tools
-    6) NON FOCTIONNEL
- 
+	   	export NETKIT_HOME=${HOME}/netkit
+	   	export MANPATH=${NETKIT_HOME}/man:${MANPATH}
+ 	   	export PATH=${PATH}:${NETKIT_HOME}/bin
+	5) Suivre les etapes suplimentaire
+	   	sudo apt-get install lib32z1 lib32ncurses5
+	   	sudo dpkg --add-architecture i386
+	   	sudo apt-get install xterm konsole make build-essential
+	   	sudo apt-get install libc6:i386
+	   	sudo apt-get install libdb1-compat tzdata
+	   	sudo apt-get install tcpdump tshark -y
+	   	sudo apt-get install wireshark graphviz
+	   	sudo apt-get install lib32z1 lib32ncurses5
+	   	sudo apt-get install net-tools
+	6) check si l'inatall est ok ?
+		cd $NETKIT_HOME
+		./check_configuration.sh
+
+
+Install Teams :
+	src : https://www.microsoft.com/en-us/microsoft-365/microsoft-teams/download-app
+	src how install : https://websiteforstudents.com/how-to-install-microsoft-teams-on-ubuntu-20-04-18-04/
+
+	1) suivre le tuto
+
+
+
 
