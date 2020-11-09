@@ -1601,10 +1601,22 @@ th1.start();
 
 
 
+/*#############################*/
+/*                             */
+/*                             */
+/*           Lambdas           */
+/*                             */
+/*                             */  
+/*#############################*/
 
-
-
-
+// declare interface avec que 1 seul methode fonctionnel pr la lmbdas : en entrer un Int i, sortie un Int
+interface Fonction{
+    int appliquer(int i);
+}
+// dans le main
+Fonction multiPar2 = (int i) -> i*2;
+// utilisation de la lambda
+System.out.println(multiPar2.appliquer(2));
 
 
 
