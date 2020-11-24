@@ -81,8 +81,13 @@ RCPT TO: mdelacourt@dim.uchile.cl
 # affiche : 250 2.1.5 Ok
 
 # 6) dire envoi de donner suplementaire
+DATA 
+# affiche : 354 End data with <CR><LF>.<CR><LF>
+
+# envoie les donner en +
 From: Martin Delacourt <martin.delacourt@univ-orleans.fr>
 To: Martin Delacourt <mdelacourt@dim.uchile.cl>
+cc : ...
 Date: Tue, 4 Sep 2010 15:21:45 +0200
 Subject: Hola!Que tal?
 body...

@@ -253,6 +253,99 @@ plot(c)
 # importer in fichier .rda
 load("/home/thomas/.cache/.fr-2AJteU/robinet.rda")
 
+# cree vec quand on a 3145 individu entre 2.5 et 5, ect...
+sal_h<-c( runif(3145,2.5,5), runif(2465,5,6), runif(4675,6,7),...)
+
+# plot x=vect km et y=vect prix; on obtient un nuage de pt
+plot(km,prix)
+
+#calc coef de corelation , plus c'est proche de 1 plus c'est coreler
+cor(km,prix) # tres corele negativement = -0.936
+
+# regresion lineaire : lm
+reg1=lm(prix~km)
+coefficients(reg1) # intercept = ^b(=13.23856)(=ordoner a l'origine) et la valeur explicative (ici km) donne â(=-0.06103)(=coef pente) 
+
+# aficher nuage de pt(x=km et y=prix) et la droite de regresion
+plot(prix~km)
+abline(reg1,lty=1,col='blue',lwd=1)
+
+# on veut verifier que le pt central (mean(x), mean(y)) est sur la droite de regresion
+13.23855594 -0.06102501*mean(km) # doit etre egale a = mean(prix)
+
+
+# qualiter de la regresion on regade R^2
+summary(reg1) # on toruve le R^2 par "Adjusted R-squared:  0.8619 " cela signifi que la regresion explique 86% de la variation
+
+# on predit qu'une voiture selon la reg1 et qui aura 150 000km aura un prix de 4 084e
+predict(reg1,data.frame(km=150)) 
+
+# charatere etudie = genre et possede vehicule, variable qualitatives
+genre=c(rep("H",2),rep("F",3),"H",rep("F",3),...)
+vehicule=c(rep("V",2),rep("NV",7),"V","NV","V",rep("NV",6),...)
+enquete=data.frame(genre,vehicule) # on lie le vect genre et vehicule
+
+# pour avoir un tableau simplifier entre genre et possede vehicule, puis l'afficher
+table_enquete=table(enquete$vehicule,enquete$genre)
+barplot(table_enquete, main="possede vehicule selon genre",xlab="genre",col=c("grey","blue"),legend=rownames(table_enquete))
+
+# on fait le test du chi-2 (qi2)
+chisq.test(table_enquete) # Si p-value < 0.05 alors on rejete le test, ici p-value=0.08 donc on ne rejet pas l'hypothese H0, les var(genre,vehicule) sont indep
+
+# pour avoir une mosaique de la table_enq1
+mosaicplot(table_enq1,col=c("blue","red"))
+
+# avoir 9 graphes en fonctio de csp(=categorie sociaux profesionel)
+par(mfrow=c(3,3))
+for (k in 1:9) {
+  barplot(table_enq1[k,],main=row.names(table_enq1)[k] )  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
