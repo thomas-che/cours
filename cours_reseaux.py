@@ -254,16 +254,37 @@ write
 
 
 
+###############################
+#                             #
+#         	 Tp 8             #		IpV6
+#                             #
+###############################  
+
+
+# on cree une machie alice avec eth0 relier au rezo A
+vstart alice --eth0=A
+
+# sur alice: 
+ip link set eth0 up # on active le eth0
+ip addr add 2001:ad54::1/64 dev eth0 # affecte cette ip a alice en eth0
+
+ip route add 2001:ad38::/64 via 2001:ad54::2 # route pr aller sur le rezo B on passe par la pasereil 2001:ad54::2 qui est celle du routeur R sur le rezo A 
+
+# lance le routeur r
+vstart r --eth0=A --eth1=B
+ip link set eth0 up 
+ip link set eth1 up 
+
+# change les ip des interface
+ip addr add 2001:ad54::2/64 dev eth0 
+ip addr add 2001:ad38::2/64 dev eth1
+
+# on dit que R devient un vrai routeur
+echo 1 > /proc/sys/net/ipv6/conf/all/forwarding
 
 
 
 
 
-
-
-
-
-
-
-
-
+ifconfig 200.1.128.100/17 # pr aatribuer l'ip
+route add default gw 200.1.128.2 # pr mettre une route
