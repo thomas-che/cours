@@ -75,3 +75,13 @@ https://www.youtube.com/watch?v=xOqL9QlfAwI&list=PLz2wSPekIjiZgQhNqwlpmC1QqORRNG
 insatl depuis ubuntu app et apres suivre info video
 
 #====================================================================
+
+Install : Docker
+https://docs.docker.com/engine/install/ubuntu/#installation-methods
+https://www.youtube.com/watch?v=M7_mZXh8h8A
+
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+sudo usermod -aG docker thomas
+
+#====================================================================

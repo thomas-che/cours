@@ -846,64 +846,171 @@ catch(Exception $e) {
 /*##########################################################*/
 
 
+/**
+ * Objet compte bancaire 
+*/
+class Compte
+{
+    // Proprietes
+    /**
+     * Titulaire du compte
+     *
+     * @var string
+     */
+    private $titulaire;
+    private float $solde; // on peut type les var ici aussi
 
-// cree class dans autre fichier : Personnage.php
-class Presonnage{
-    // proprieter
-    public $vie = 100;
-    public $nom;
+    // definition de constante, par default public
+    const TAUX_INTERETS = 5; // 5%
 
-    // cree une methode = fonction
-    public function crier(){
-        echo 'AAAAAA';
+    // methode magique (=> commence par __) le constructeur
+    /**
+     * Constructeur compte banquaire
+     *
+     * @param string $titulaire nom du titularie
+     * @param float $solde montant du solde 
+     */
+    public function __construct(string $titulaire, float $solde = 100)
+    {
+        // on attribut le nom a la propritete titulaire de l'intance cree
+        $this->titulaire = $titulaire;
+        // access a une constante dans la class, self est le nom de la class Compte
+        $this->solde = $solde + ($solde * self::TAUX_INTERETS)/100;
     }
 
-    // modifier atribut de l obj avec this
-    $this->vie=100;
+    // Accesseurs
+    // le getteur avec : string qui indique le type de retour = string
+    /**
+     * Retourne le nom du titulaire du compte
+     *
+     * @return string
+     */
+    public function getTitulaire(): string
+    {
+        return $this->titulaire;
+    } 
 
-    // personnage attaque un autre
-    public function attaque($Pers){
-        $Pers->vie = $Pers->vie - $this->atk;
-        $Pers->vie -= $this->atk; // ou
+    // Editeur (Setteur)
+    // retourne l'objet de la class => : self 
+    /**
+     * modifie le nom du titulaire et retourn l'objt
+     *
+     * @param string $titulaire nom du titulaire
+     * @return Compte on retourn le compte
+     */
+    public function setTitulaire(string $titulaire): self
+    {
+        if ($titulaire != ""){
+            $this->titulaire = $titulaire;
+        }
+        return $this;
+    }
+
+
+    // Methodes
+    /**
+     * Retire de l'argent sur le comte
+     *
+     * @param float $montant a retirer
+     * @return void
+     */
+    public function retire(float $montant)
+    {
+        if ( 0 < $montant && $montant <= $this->solde){
+            $this->solde -= $montant; 
+        }else{
+            echo "montant invalid ou solde insufisant";
+        }
+        // utilisation de methode priver
+        echo $this->decouvert();
+    }
+
+    // methode prive, utilisable uniquement dans la class
+    /**
+     * Permet de savoir l'etat du solde
+     *
+     * @return string qui dit l'etat du solde
+     */
+    private function decouvert()
+    {
+        if ($this->solde < 0){
+            return "Vous ete a decouvert !";
+        }
+        else{
+            return "Pas a decouvert OK";
+        }
     }
 }
 
-// cree new objet 
-$toto = new Presonnage();
 
-// retourn la valeur de la var
-$toto->vie; // 100
+// +--------------------+
+// |   dans index.php   |
+// +--------------------+
 
-// attribuer la methode crier a l obj toto
-$toto->crier();
+// function de debug
+function d($var,$com=''){
+    $bt = debug_backtrace();
+    $caller = array_shift($bt);
+    echo '<pre>';
+    echo '<B>'.$com.'</B></br>';
+    echo $caller["file"].':'.$caller["line"].'</br>';
+    var_dump($var);
+    echo '</pre>';
+}
+d($compte1);
 
-// vidibiliter :
-public //$toto->nom = toto
-private //$toto->nom = ERROR
-protected // acces depuis des class qui en herite
+// require sur les class
+require_once 'classes/Compte.php';
+
+// on instancie l obj Compte
+$compte1 = new Compte('thomas',500);
+
+// retire 100e
+$compte1->retire(100);
+
+// afficher le titulaire
+echo $compte1->getTitulaire();
+
+// set le titulaire du compte
+$compte1->setTitulaire('Thomas');
+
+// accedese sur une class tout ce qui est contant, static (operateur de resolution de porté)
+echo 'le taux d\'interet est : '. Compte::TAUX_INTERETS . '%';
 
 
+// +--------------------+
+// |     Heritage       |
+// +--------------------+
+
+// Compte bancaire (herite de Compte)
+class CompteCorrant extends Compte 
+{ 
+    // nouvelle atribut de la class
+    private $decouvert;
+
+    // Constructeur du compte courrant
+    public function __construct(string $titulaire, float $solde, int $decouvert)
+    {
+        // on utilise le constructeur du parent (Compte)
+        parent::__construct($titulaire, $solde);
+        $this->decouvert = $decouvert;
+    }
+
+    // on redefinit la methode simplement
+    public function retire(float $montant)
+    {
+        if ( 0 < $montant && -$this->decouvert <= ($this->solde - $montant) ){
+            $this->solde -= $montant; 
+        }else{
+            echo "montant invalid ou depasse le decouvert";
+        }
+    }
+};
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// +--------------------------+
+// |  Namespaces et Autoload  |
+// +--------------------------+
 
 
 
