@@ -1,0 +1,20 @@
+#
+	19/01/2021
+#
+
+
+Error : Could not get lock /var/lib/dpkg/lock
+Quand j'ai voulu instaler git (sudo apt instal git) j'etait bloker par cette erreur
+
+Suite de commande : src : https://www.linuxuprising.com/2018/07/how-to-fix-could-not-get-lock.html
+	
+	sudo rm /var/lib/apt/lists/lock
+	sudo rm /var/cache/apt/archives/lock
+	sudo rm /var/lib/dpkg/lock
+	sudo dpkg --configure -a
+	reboot
+	sudo dpkg --configure -a
+	sudo apt install -f
+	sudo dpkg --configure -a
+	sudo apt-get update
+	sudo apt-get upgrade

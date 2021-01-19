@@ -21,6 +21,52 @@ Install ubuntu 20.04:
 	6) Faire les maj 		
 
 
+Install ubuntu 20.04 18/01/2021: (src : https://youtu.be/bXOp75Z7adY )
+
+	1) Clef bootable avec rufus iso de ubuntu 20.04 amd64 bit : 
+		shemat de la partition = GPT
+	2) Sur le SSD : reduire la partition de 150Go (153600 Mo)
+	2) Dans le BIOS : 
+		UEFI, 
+		Secure Boot = Disable,
+		Fast Boot = Disable,
+		changer les prioriter pr boot sous la clef
+	3) Check pas de pb dasn les fichier sur la clef bootable
+	4) Insatll ubuntu (autre chose) :
+		Selectione partition espace libre : 153600 Mo : (click sur +)
+			Cree partition swap : 10240Mo ; Logique ; Début de cet espace ; swap
+		Selection le reste de l'espace libre : 143360 Mo : (click sur +)
+			Cree partition ext4 : 143360Mo ; Logique ; Début de cet espace ; poit de montage / ; ext4
+		Slectione la derniere partition cree : 143360Mo en ext4 et Installer maintenant
+	5) Reboot, dans le BIOS :
+		changer les prioriter pr boot sur le ssd samsung en 1er
+		changer ordre de prioriter de boot : 1) ubuntu 2) windows pr avoir le grub de ubuntu
+	6) Faire les maj 	
+
+
+Desinstaller ubuntu 20.04 18/01/2021: (src : https://youtu.be/kZefIM7MDxo )
+
+	0) Supprimer et formater les disk ou il y avait le linux
+		/!\ peut etre pas le bon ordre /!\
+	1) Dans le BIOS : 
+		changer ordre de prioriter de boot : 1) windows boot manager 
+	2) Dans Visaul BCD
+		Supprimer dans le loader l'entrer ubuntu : (click droit ; delet select obj)
+	3) reboot
+	4) Dans cmd en mode admin:
+		diskpart
+		select disk 1 (c'est le disk ssd ou il y a la partition efi)
+		list partition
+		select partition 2 (partition systeme)
+		assign letter=R
+		exit
+		R:
+		cd EFI
+		rmdir /S ubuntu
+	5) reboot
+
+
+
 Install depuis Ubuntu Software:
 
 	Sublime Text
@@ -30,7 +76,12 @@ Install depuis Ubuntu Software:
 	Gimp
 	Kdenlive
 	Kazam
-	Chrome
+	Chroium
+	Audacity
+	Intellij
+	Phpstorm
+	Pycharm
+	Telegram
 
 
 Install LAMP :
@@ -144,5 +195,3 @@ Install Teams :
 
 
 
-
-test
